@@ -6,10 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import dev.stralman.flashcardio.ui.compose.flashcard.CardFace
+import dev.stralman.flashcardio.ui.compose.flashcard.FlashCardTextItem
 import dev.stralman.flashcardio.ui.theme.FlashcardioTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,25 +25,19 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    var state by remember {
+                        mutableStateOf(CardFace.FRONT)
+                    }
+                    FlashCardTextItem(
+                        front = "Front",
+                        back = "Back",
+                        cardFace = state,
+                        onClick = {
+                            state = it.next()
+                        },
+                    )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    FlashcardioTheme {
-        Greeting("Android")
     }
 }
