@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -15,8 +16,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
+import dev.stralman.flashcardio.ui.compose.theme.AppTheme
+import dev.stralman.flashcardio.ui.compose.util.ThemePreview
 
 enum class CardFace {
     FRONT {
@@ -24,13 +25,13 @@ enum class CardFace {
             return BACK
         }
     },
-    BACK{
+    BACK {
         override fun next(): CardFace {
             return FRONT
         }
     };
 
-    abstract fun next() : CardFace
+    abstract fun next(): CardFace
 }
 
 @Composable
@@ -41,15 +42,13 @@ fun FlashCardTextItem(
     cardFace: CardFace,
     onClick: (CardFace) -> Unit,
 ) {
-    val fontSize = 30.sp
     FlashCard(
         cardFace = cardFace,
         onClick = { onClick(cardFace) },
         front = {
             Text(
                 text = front,
-                fontSize = fontSize,
-                lineHeight = 116.sp,
+                style = MaterialTheme.typography.headlineLarge,
                 textAlign = TextAlign.Center,
                 modifier = it,
             )
@@ -57,8 +56,7 @@ fun FlashCardTextItem(
         back = {
             Text(
                 text = back,
-                fontSize = fontSize,
-                lineHeight = 116.sp,
+                style = MaterialTheme.typography.headlineLarge,
                 textAlign = TextAlign.Center,
                 modifier = it,
             )
@@ -74,7 +72,7 @@ fun FlashCard(
     onClick: (CardFace) -> Unit,
     back: @Composable (modifier: Modifier) -> Unit = {},
     front: @Composable (modifier: Modifier) -> Unit = {},
-){
+) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
@@ -93,6 +91,7 @@ fun FlashCard(
                             Modifier.align(Alignment.Center)
                         )
                     }
+
                     CardFace.BACK -> {
                         back(
                             Modifier.align(Alignment.Center)
@@ -104,18 +103,20 @@ fun FlashCard(
     }
 }
 
-@Preview
+@ThemePreview
 @Composable
 fun FlipCardTextItemPreview() {
     var state by remember {
         mutableStateOf(CardFace.FRONT)
     }
-    FlashCardTextItem(
-        front = "Front",
-        back = "Back",
-        cardFace = state,
-        onClick = {
-            state = it.next()
-        },
-    )
+    AppTheme {
+        FlashCardTextItem(
+            front = "Front",
+            back = "Back",
+            cardFace = state,
+            onClick = {
+                state = it.next()
+            },
+        )
+    }
 }

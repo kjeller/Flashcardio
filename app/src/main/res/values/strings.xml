@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Flashcardio</string>
+    <string name="deck_add_desc">Add new flashcard set</string>
+    <string name="deck_settings">Go to flashcard deck settings</string>
+    <string name="title_add_flashcard_to_deck">Add flashcard to deck</string>
+    <string name="add_flashcard_text_item_front_text">Flashcard front text</string>
+    <string name="add_flashcard_text_item_back_text">Flashcard back text</string>
+    <string name="flashcardtype_simple_text_enum_desc">Simple text flashcard</string>
+    <string name="flashcardtype_rich_text_enum_desc">Rich text flashcard</string>
 </resources>

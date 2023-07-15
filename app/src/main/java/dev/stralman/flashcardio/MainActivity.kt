@@ -6,25 +6,25 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import dev.stralman.flashcardio.ui.compose.flashcard.CardFace
-import dev.stralman.flashcardio.ui.compose.flashcard.FlashCardTextItem
-import dev.stralman.flashcardio.ui.theme.FlashcardioTheme
+import androidx.compose.ui.unit.dp
+import dev.stralman.flashcardio.ui.compose.flashcard.AddFlashCardScreen
+import dev.stralman.flashcardio.ui.compose.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            FlashcardioTheme {
+            AppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
+                    tonalElevation = 5.dp,
                 ) {
+                    // test1 DeckScreen(modifier = Modifier)
+                    AddFlashCardScreen()
+                    /*test2
                     var state by remember {
                         mutableStateOf(CardFace.FRONT)
                     }
@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                         onClick = {
                             state = it.next()
                         },
-                    )
+                    ) */
                 }
             }
         }
