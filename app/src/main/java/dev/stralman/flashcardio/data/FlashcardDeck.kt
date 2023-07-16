@@ -1,4 +1,4 @@
-package dev.stralman.flashcardio.model.flashcard
+package dev.stralman.flashcardio.data
 
 data class FlashcardDeck(
     val deckName: String,

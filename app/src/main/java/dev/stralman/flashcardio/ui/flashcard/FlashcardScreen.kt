@@ -1,4 +1,4 @@
-package dev.stralman.flashcardio.ui.compose.flashcard
+package dev.stralman.flashcardio.ui.flashcard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,8 +16,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import dev.stralman.flashcardio.ui.compose.theme.AppTheme
-import dev.stralman.flashcardio.ui.compose.util.ThemePreview
+import dev.stralman.flashcardio.ui.theme.AppTheme
+import dev.stralman.flashcardio.ui.util.ThemePreview
 
 enum class CardFace {
     FRONT {

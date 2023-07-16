@@ -1,4 +1,4 @@
-package dev.stralman.flashcardio.ui.compose.flashcard
+package dev.stralman.flashcardio.ui.flashcard
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -35,7 +35,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import dev.stralman.flashcardio.R
-import dev.stralman.flashcardio.ui.compose.util.ThemePreview
+import dev.stralman.flashcardio.ui.util.ThemePreview
 
 enum class FlashCardType {
     SIMPLE_TEXT_ITEM {

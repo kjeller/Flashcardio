@@ -1,4 +1,4 @@
-package dev.stralman.flashcardio.ui.compose.deck
+package dev.stralman.flashcardio.ui.deck
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -19,10 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.stralman.flashcardio.R
-import dev.stralman.flashcardio.model.flashcard.Flashcard
-import dev.stralman.flashcardio.model.flashcard.FlashcardDeck
-import dev.stralman.flashcardio.ui.compose.theme.AppTheme
-import dev.stralman.flashcardio.ui.compose.util.ThemePreview
+import dev.stralman.flashcardio.data.Flashcard
+import dev.stralman.flashcardio.data.FlashcardDeck
+import dev.stralman.flashcardio.ui.theme.AppTheme
+import dev.stralman.flashcardio.ui.util.ThemePreview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

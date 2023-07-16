@@ -1,4 +1,4 @@
-package dev.stralman.flashcardio.ui.compose.util
+package dev.stralman.flashcardio.ui.util
 
 import android.content.res.Configuration
 import androidx.compose.ui.tooling.preview.Preview

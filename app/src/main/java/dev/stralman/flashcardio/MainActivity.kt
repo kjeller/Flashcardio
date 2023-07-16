@@ -8,8 +8,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.stralman.flashcardio.ui.compose.flashcard.AddFlashCardScreen
-import dev.stralman.flashcardio.ui.compose.theme.AppTheme
+import dev.stralman.flashcardio.ui.flashcard.AddFlashCardScreen
+import dev.stralman.flashcardio.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

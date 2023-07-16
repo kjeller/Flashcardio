@@ -1,4 +1,4 @@
-package dev.stralman.flashcardio.ui.compose.theme
+package dev.stralman.flashcardio.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
