@@ -11,11 +11,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -55,7 +57,8 @@ enum class FlashCardType {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddFlashCardScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateBack: () -> Unit,
 ) {
     var state by remember { mutableStateOf(FlashCardType.SIMPLE_TEXT_ITEM) }
 
@@ -72,6 +75,19 @@ fun AddFlashCardScreen(
                         style = MaterialTheme.typography.titleLarge,
                     )
                 },
+                navigationIcon = {
+                    IconButton(
+                        onClick = {
+                            navigateBack()
+                        }
+                    ) {
+                        Icon(
+                            Icons.Rounded.ArrowBack,
+                            contentDescription = "Back"
+                        )
+                    }
+
+                }
             )
         },
         floatingActionButton = {
@@ -144,7 +160,7 @@ fun AddFlashCardTextItem(
     var frontText by remember { mutableStateOf("") }
     var backText by remember { mutableStateOf("") }
     TextField(
-        modifier = Modifier.padding(20.dp),
+        modifier = modifier.padding(20.dp),
         value = frontText,
         onValueChange = { frontText = it },
         label = {
@@ -178,5 +194,7 @@ fun AddFlashCardRichTextItem(
 @ThemePreview
 @Composable
 fun AddFlashCardScreenPreview() {
-    AddFlashCardScreen()
+    AddFlashCardScreen(
+        navigateBack = {}
+    )
 }

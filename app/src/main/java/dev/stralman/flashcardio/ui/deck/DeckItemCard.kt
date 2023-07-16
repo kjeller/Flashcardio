@@ -33,7 +33,7 @@ fun DeckItemCard(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = flashcardDeck.deckName,
+                text = flashcardDeck.name,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Left
             )
@@ -72,7 +72,7 @@ fun DeckItemCardList(
 fun DeckItemCardPreview() {
     val flashCardDeckLists = listOf(
         FlashcardDeck(
-            deckName = "Korean common phrases한글",
+            name = "Korean common phrases (한글)",
             cards = listOf(
                 Flashcard(
                     frontText = "안녕하세요",
@@ -81,7 +81,7 @@ fun DeckItemCardPreview() {
             )
         ),
         FlashcardDeck(
-            deckName = "NATO Phonetic Alphabet",
+            name = "NATO Phonetic Alphabet",
             cards = listOf(
                 Flashcard(
                     frontText = "A",

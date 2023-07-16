@@ -27,7 +27,10 @@ import dev.stralman.flashcardio.ui.util.ThemePreview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeckScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToDeck: (String) -> Unit,
+    navigateToAddFlashcard: (String) -> Unit,
+    navigateToAddDeck: (String) -> Unit,
 ) {
     Scaffold(
         modifier = modifier
@@ -46,7 +49,10 @@ fun DeckScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* ... */ }) {
+                onClick = {
+                    navigateToAddDeck("test")
+                }
+            ) {
                 Icon(
                     Icons.Rounded.Add,
                     contentDescription = stringResource(id = R.string.deck_add_desc)
@@ -61,7 +67,7 @@ fun DeckScreen(
             // TODO replace this with an actual data source
             val flashCardDeckLists = listOf(
                 FlashcardDeck(
-                    deckName = "Korean common phrases한글",
+                    name = "Korean common phrases한글",
                     cards = listOf(
                         Flashcard(
                             frontText = "안녕하세요",
@@ -70,7 +76,7 @@ fun DeckScreen(
                     )
                 ),
                 FlashcardDeck(
-                    deckName = "NATO Phonetic Alphabet",
+                    name = "NATO Phonetic Alphabet",
                     cards = listOf(
                         Flashcard(
                             frontText = "A",
@@ -98,6 +104,10 @@ fun DeckScreen(
 @Composable
 fun DeckScreenPreview() {
     AppTheme {
-        DeckScreen()
+        DeckScreen(
+            navigateToDeck = {},
+            navigateToAddFlashcard = {},
+            navigateToAddDeck = {},
+        )
     }
 }

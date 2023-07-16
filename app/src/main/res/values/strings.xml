@@ -7,4 +7,5 @@
     <string name="add_flashcard_text_item_back_text">Flashcard back text</string>
     <string name="flashcardtype_simple_text_enum_desc">Simple text flashcard</string>
     <string name="flashcardtype_rich_text_enum_desc">Rich text flashcard</string>
+    <string name="add_card_deck">Add card deck</string>
 </resources>
