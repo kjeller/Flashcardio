@@ -26,20 +26,6 @@ class MainActivity : ComponentActivity() {
                     tonalElevation = 5.dp,
                 ) {
                     FlashcardioApp()
-                    // test1 DeckScreen(modifier = Modifier)
-                    //AddFlashCardScreen()
-                    /*test2
-                    var state by remember {
-                        mutableStateOf(CardFace.FRONT)
-                    }
-                    FlashCardTextItem(
-                        front = "Front",
-                        back = "Back",
-                        cardFace = state,
-                        onClick = {
-                            state = it.next()
-                        },
-                    ) */
                 }
             }
         }

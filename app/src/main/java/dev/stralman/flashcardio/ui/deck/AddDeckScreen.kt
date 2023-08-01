@@ -18,20 +18,27 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.stralman.flashcardio.R
+import dev.stralman.flashcardio.ui.util.ThemePreview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddDeckScreen(
-    navigateBack: () -> Unit,
+    onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var deckName by remember { mutableStateOf("") }
     Scaffold(
         modifier = modifier
             .fillMaxWidth()
@@ -48,7 +55,7 @@ fun AddDeckScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            navigateBack()
+                            onNavigateBack()
                         }
                     ) {
                         Icon(
@@ -79,9 +86,32 @@ fun AddDeckScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = modifier.selectableGroup(),
             ) {
-                Text(text = "TODO ADD TEXTFIELD HERE")
 
+                Text(
+                    text = "Deckname:",
+                    style = MaterialTheme.typography.labelMedium,
+                )
+                TextField(
+                    modifier = Modifier.padding(20.dp),
+                    value = deckName,
+                    onValueChange = { deckName = it },
+                    label = {
+                        Text(
+                            text = "Deck name",
+                            style = MaterialTheme.typography.labelMedium,
+                        )
+                    }
+                )
+                // TODO add option for toggling TTS for a deck
             }
         }
     }
+}
+
+@ThemePreview
+@Composable
+fun AddDeckScreenPreview() {
+    AddDeckScreen(
+        onNavigateBack = {}
+    )
 }

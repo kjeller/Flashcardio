@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.stralman.flashcardio.R
-import dev.stralman.flashcardio.data.Flashcard
+import dev.stralman.flashcardio.data.FakeRepository
 import dev.stralman.flashcardio.data.FlashcardDeck
 import dev.stralman.flashcardio.ui.theme.AppTheme
 import dev.stralman.flashcardio.ui.util.ThemePreview
@@ -28,9 +28,9 @@ import dev.stralman.flashcardio.ui.util.ThemePreview
 @Composable
 fun DeckScreen(
     modifier: Modifier = Modifier,
-    navigateToDeck: (String) -> Unit,
-    navigateToAddFlashcard: (String) -> Unit,
-    navigateToAddDeck: (String) -> Unit,
+    onNavigateToDeck: (FlashcardDeck) -> Unit,
+    onNavigateToAddFlashcard: (String) -> Unit,
+    onNavigateToAddDeck: (String) -> Unit,
 ) {
     Scaffold(
         modifier = modifier
@@ -41,7 +41,7 @@ fun DeckScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Flashcard sets",
+                        text = stringResource(R.string.flashcard_deckscreen_title),
                         style = MaterialTheme.typography.titleLarge,
                     )
                 },
@@ -50,7 +50,7 @@ fun DeckScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navigateToAddDeck("test")
+                    onNavigateToAddDeck("test")
                 }
             ) {
                 Icon(
@@ -65,36 +65,10 @@ fun DeckScreen(
         // Screen content
         Box(modifier = Modifier.padding(contentPadding)) {
             // TODO replace this with an actual data source
-            val flashCardDeckLists = listOf(
-                FlashcardDeck(
-                    name = "Korean common phrases한글",
-                    cards = listOf(
-                        Flashcard(
-                            frontText = "안녕하세요",
-                            backText = "Hello (annyeonghaseyo)"
-                        ),
-                    )
-                ),
-                FlashcardDeck(
-                    name = "NATO Phonetic Alphabet",
-                    cards = listOf(
-                        Flashcard(
-                            frontText = "A",
-                            backText = "Alpha"
-                        ),
-                        Flashcard(
-                            frontText = "B",
-                            backText = "Bravo"
-                        ),
-                        Flashcard(
-                            frontText = "C",
-                            backText = "Charlie"
-                        )
-                    )
-                )
-            )
+            val flashCardDeckLists = FakeRepository().getFlashCardDeckMap()
             DeckItemCardList(
-                flashcardDeckList = flashCardDeckLists
+                flashcardDeckList = flashCardDeckLists,
+                onNavigateToDeck = onNavigateToDeck,
             )
         }
     }
@@ -105,9 +79,8 @@ fun DeckScreen(
 fun DeckScreenPreview() {
     AppTheme {
         DeckScreen(
-            navigateToDeck = {},
-            navigateToAddFlashcard = {},
-            navigateToAddDeck = {},
-        )
+            onNavigateToDeck = {},
+            onNavigateToAddFlashcard = {},
+        ) {}
     }
 }

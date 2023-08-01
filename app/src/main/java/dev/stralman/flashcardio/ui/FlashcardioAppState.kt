@@ -4,23 +4,24 @@ import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import dev.stralman.flashcardio.data.FlashcardDeck
 
 /**
- * List of screens for [FlashcardioApp]
+ * List of destinations for [FlashcardioApp]
  */
-sealed class Screen(val route: String) {
-    object Home : Screen("home")
-    object Flashcard : Screen("deck/{id}") {
-        fun createRoute(id: String) = "deck/1/card/$id"
+sealed class Destination(val route: String) {
+    object HomeScreen : Destination("home")
+    object FlashcardScreen : Destination("deck/{deck_id}") {
+        fun createRoute(id : String) = "deck/$id"
     }
-
-    object AddDeckScreen : Screen("deck/1/add")
-    object AddFlashCardScreen : Screen("deck/1/card/add")
+    object AddDeckScreen : Destination("deck/add")
+    object AddFlashCardScreen : Destination("deck/{deck_id}/add")
 }
 
 @Composable
@@ -36,23 +37,19 @@ class FlashcardioAppState(
     private val context: Context
 ) {
 
-    fun navigateToDeck(id: String, from: NavBackStackEntry) {
-        // In order to discard duplicated navigation events, we check the Lifecycle
-        if (from.lifecycleIsResumed()) {
-            val id = Uri.encode(id)
-            navController.navigate(Screen.Flashcard.createRoute(id))
-        }
+    fun onNavigateToDeck(id: String) {
+        navController.navigate(Destination.FlashcardScreen.createRoute(id))
     }
 
-    fun navigateToAddFlashcardScreen() {
-        navController.navigate(Screen.AddFlashCardScreen.route)
+    fun onNavigateToAddFlashcardScreen() {
+        navController.navigate(Destination.AddFlashCardScreen.route)
     }
 
-    fun navigateToAddDeckScreen() {
-        navController.navigate(Screen.AddDeckScreen.route)
+    fun onNavigateToAddDeckScreen() {
+        navController.navigate(Destination.AddDeckScreen.route)
     }
 
-    fun navigateBack() {
+    fun onNavigateBack() {
         navController.popBackStack()
     }
 }

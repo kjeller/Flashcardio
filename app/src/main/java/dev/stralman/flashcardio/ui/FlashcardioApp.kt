@@ -1,11 +1,15 @@
 package dev.stralman.flashcardio.ui
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import dev.stralman.flashcardio.data.FakeRepository
 import dev.stralman.flashcardio.ui.deck.AddDeckScreen
 import dev.stralman.flashcardio.ui.deck.DeckScreen
 import dev.stralman.flashcardio.ui.flashcard.AddFlashCardScreen
+import dev.stralman.flashcardio.ui.flashcard.FlashCardScreen
 
 @Composable
 fun FlashcardioApp(
@@ -13,32 +17,46 @@ fun FlashcardioApp(
 ) {
     NavHost(
         navController = appState.navController,
-        startDestination = Screen.Home.route
+        startDestination = Destination.HomeScreen.route
     ) {
-        composable(Screen.Home.route) { backStackEntry ->
+        composable(Destination.HomeScreen.route) {
             DeckScreen(
-                navigateToDeck = { id ->
-                    appState.navigateToDeck(id, backStackEntry)
+                onNavigateToDeck = {
+                    appState.onNavigateToDeck("${it.id}")
                 },
-                navigateToAddFlashcard = { id ->
-                    appState.navigateToAddFlashcardScreen()
-                },
-                navigateToAddDeck = { id ->
-                    appState.navigateToAddDeckScreen()
+                onNavigateToAddFlashcard = {
+                    appState.onNavigateToAddFlashcardScreen()
                 }
-            )
+            ) {
+                appState.onNavigateToAddDeckScreen()
+            }
         }
-        composable(Screen.AddDeckScreen.route) { backStackEntry ->
+        composable(Destination.FlashcardScreen.route,
+            arguments = listOf(navArgument("deck_id") {
+                type = NavType.StringType
+            })) {
+            it.arguments?.getString("deck_id")?.let {deck_id ->
+                val deck_id = deck_id.toInt()
+                FlashCardScreen(
+                    flashCardDeck = FakeRepository().getFlashCardDeckMap()[deck_id],
+                    onNavigateBack = {
+                        appState.onNavigateBack()
+                    }
+                )
+            }
+
+        }
+        composable(Destination.AddDeckScreen.route) {
             AddDeckScreen(
-                navigateBack = {
-                    appState.navigateBack()
+                onNavigateBack = {
+                    appState.onNavigateBack()
                 }
             )
         }
-        composable(Screen.AddFlashCardScreen.route) { backStackEntry ->
+        composable(Destination.AddFlashCardScreen.route) {
             AddFlashCardScreen(
-                navigateBack = {
-                    appState.navigateBack()
+                onNavigateBack = {
+                    appState.onNavigateBack()
                 }
             )
         }

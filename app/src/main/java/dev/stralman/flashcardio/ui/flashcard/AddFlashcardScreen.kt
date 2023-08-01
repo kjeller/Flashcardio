@@ -58,7 +58,7 @@ enum class FlashCardType {
 @Composable
 fun AddFlashCardScreen(
     modifier: Modifier = Modifier,
-    navigateBack: () -> Unit,
+    onNavigateBack: () -> Unit,
 ) {
     var state by remember { mutableStateOf(FlashCardType.SIMPLE_TEXT_ITEM) }
 
@@ -78,7 +78,7 @@ fun AddFlashCardScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            navigateBack()
+                            onNavigateBack()
                         }
                     ) {
                         Icon(
@@ -159,6 +159,10 @@ fun AddFlashCardTextItem(
 ) {
     var frontText by remember { mutableStateOf("") }
     var backText by remember { mutableStateOf("") }
+    Text(
+        text = "Front:",
+        style = MaterialTheme.typography.labelMedium,
+    )
     TextField(
         modifier = modifier.padding(20.dp),
         value = frontText,
@@ -169,6 +173,10 @@ fun AddFlashCardTextItem(
                 style = MaterialTheme.typography.labelMedium,
             )
         }
+    )
+    Text(
+        text = "Back:",
+        style = MaterialTheme.typography.labelMedium,
     )
     TextField(
         modifier = Modifier.padding(20.dp),
@@ -195,6 +203,6 @@ fun AddFlashCardRichTextItem(
 @Composable
 fun AddFlashCardScreenPreview() {
     AddFlashCardScreen(
-        navigateBack = {}
+        onNavigateBack = {}
     )
 }
