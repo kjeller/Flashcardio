@@ -25,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,8 +37,10 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.stralman.flashcardio.R
 import dev.stralman.flashcardio.ui.util.ThemePreview
+import dev.stralman.flashcardio.viewmodels.AddFlashcardViewModel
 
 enum class FlashCardType {
     SIMPLE_TEXT_ITEM {
@@ -58,10 +61,12 @@ enum class FlashCardType {
 @Composable
 fun AddFlashCardScreen(
     modifier: Modifier = Modifier,
+    viewModel: AddFlashcardViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit,
 ) {
     var state by remember { mutableStateOf(FlashCardType.SIMPLE_TEXT_ITEM) }
-
+    val frontText = remember { mutableStateOf("") }
+    val backText = remember { mutableStateOf("") }
     Scaffold(
         modifier = modifier
             .fillMaxWidth()
@@ -86,14 +91,19 @@ fun AddFlashCardScreen(
                             contentDescription = "Back"
                         )
                     }
-
                 }
             )
         },
         floatingActionButton = {
             FloatingActionButton(
-
-                onClick = { /* ... */ }) {
+                onClick = {
+                    viewModel.addCardToDeck(
+                        frontText = frontText.value,
+                        backText = backText.value,
+                    )
+                    onNavigateBack()
+                }
+            ) {
                 Icon(
                     Icons.Rounded.Check,
                     contentDescription = stringResource(id = R.string.deck_add_desc)
@@ -101,7 +111,6 @@ fun AddFlashCardScreen(
             }
         },
         floatingActionButtonPosition = FabPosition.End,
-
         ) { contentPadding ->
         // Screen content
         Box(modifier = Modifier.padding(contentPadding)) {
@@ -126,9 +135,6 @@ fun AddFlashCardScreen(
                         RadioButton(
                             selected = state == it,
                             onClick = { state = it },
-                            modifier = Modifier.semantics {
-                                contentDescription = "Localized Description"
-                            }
                         )
                         Text(
                             text = stringResource(id = it.getDescriptionResourceId()),
@@ -139,9 +145,10 @@ fun AddFlashCardScreen(
                 when (state) {
                     FlashCardType.SIMPLE_TEXT_ITEM ->
                         AddFlashCardTextItem(
-                            modifier = modifier
+                            modifier = modifier,
+                            frontText = frontText,
+                            backText = backText
                         )
-
                     FlashCardType.RICH_TEXT_ITEM ->
                         AddFlashCardRichTextItem(
                             modifier = modifier
@@ -156,17 +163,15 @@ fun AddFlashCardScreen(
 @Composable
 fun AddFlashCardTextItem(
     modifier: Modifier = Modifier,
+    frontText: MutableState<String>,
+    backText: MutableState<String>,
 ) {
-    var frontText by remember { mutableStateOf("") }
-    var backText by remember { mutableStateOf("") }
-    Text(
-        text = "Front:",
-        style = MaterialTheme.typography.labelMedium,
-    )
     TextField(
-        modifier = modifier.padding(20.dp),
-        value = frontText,
-        onValueChange = { frontText = it },
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(20.dp),
+        value = frontText.value,
+        onValueChange = { frontText.value = it },
         label = {
             Text(
                 text = stringResource(R.string.add_flashcard_text_item_front_text),
@@ -174,14 +179,12 @@ fun AddFlashCardTextItem(
             )
         }
     )
-    Text(
-        text = "Back:",
-        style = MaterialTheme.typography.labelMedium,
-    )
     TextField(
-        modifier = Modifier.padding(20.dp),
-        value = backText,
-        onValueChange = { backText = it },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(20.dp),
+        value = backText.value,
+        onValueChange = { backText.value = it },
         label = {
             Text(
                 text = stringResource(R.string.add_flashcard_text_item_back_text),

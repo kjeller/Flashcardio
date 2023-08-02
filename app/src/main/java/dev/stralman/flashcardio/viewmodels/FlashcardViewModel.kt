@@ -17,8 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FlashcardViewModel @Inject internal constructor(
     savedStateHandle: SavedStateHandle,
-    flashcardRepository: FlashcardRepository,
-    deckRepository: DeckRepository,
+    private val deckRepository: DeckRepository,
 ) : ViewModel() {
 
     /**
@@ -26,18 +25,6 @@ class FlashcardViewModel @Inject internal constructor(
      */
     private val deckId: Long = savedStateHandle.get<String>(ID_SAVED_STATE_KEY)?.toLong()!!
     val deck = deckRepository.getDeck(deckId).asLiveData()
-
-    fun addCardToDeck() {
-        viewModelScope.launch {
-            // TODO
-        }
-    }
-
-    fun deleteCardFromDeck() {
-        viewModelScope.launch {
-            // TODO
-        }
-    }
 
     companion object {
         private const val ID_SAVED_STATE_KEY = "deckId"

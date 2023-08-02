@@ -7,6 +7,15 @@
     <string name="add_flashcard_text_item_back_text">Flashcard back text</string>
     <string name="flashcardtype_simple_text_enum_desc">Simple text flashcard</string>
     <string name="flashcardtype_rich_text_enum_desc">Rich text flashcard</string>
-    <string name="add_card_deck">Add card deck</string>
     <string name="flashcard_deckscreen_title">Flashcard Decks</string>
+
+    <!-- AddDeckScreen-->
+    <string name="add_card_deck_topbar_title">Add card deck</string>
+    <string name="add_deck_name_field">Deck name</string>
+
+    <!-- DeckSettingsScreen -->
+    <string name="deck_settings_topbar_title">Deck settings</string>
+    <string name="deck_settings_remove_card">Remove card from deck</string>
+    <string name="deck_settings_add_card">Add new card to deck</string>
+    <string name="flashcard_screen_empty_deck">" Empty deck"</string>
 </resources>

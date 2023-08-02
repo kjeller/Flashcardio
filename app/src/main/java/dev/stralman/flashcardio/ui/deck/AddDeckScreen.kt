@@ -29,14 +29,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.stralman.flashcardio.R
 import dev.stralman.flashcardio.ui.util.ThemePreview
+import dev.stralman.flashcardio.viewmodels.AddDeckViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddDeckScreen(
-    onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
+    onNavigateBack: () -> Unit,
+    onNavigateHome: () -> Unit,
+    viewModel: AddDeckViewModel = hiltViewModel(),
 ) {
     var deckName by remember { mutableStateOf("") }
     Scaffold(
@@ -48,7 +52,7 @@ fun AddDeckScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = stringResource(R.string.add_card_deck),
+                        text = stringResource(R.string.add_card_deck_topbar_title),
                         style = MaterialTheme.typography.titleLarge,
                     )
                 },
@@ -69,7 +73,11 @@ fun AddDeckScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* ... */ }) {
+                onClick = {
+                    viewModel.addDeck(deckName)
+                    onNavigateHome()
+                }
+            ) {
                 Icon(
                     Icons.Rounded.Check,
                     contentDescription = stringResource(id = R.string.deck_add_desc)
@@ -86,18 +94,15 @@ fun AddDeckScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = modifier.selectableGroup(),
             ) {
-
-                Text(
-                    text = "Deckname:",
-                    style = MaterialTheme.typography.labelMedium,
-                )
                 TextField(
-                    modifier = Modifier.padding(20.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp),
                     value = deckName,
                     onValueChange = { deckName = it },
                     label = {
                         Text(
-                            text = "Deck name",
+                            text = stringResource(R.string.add_deck_name_field),
                             style = MaterialTheme.typography.labelMedium,
                         )
                     }
@@ -112,6 +117,7 @@ fun AddDeckScreen(
 @Composable
 fun AddDeckScreenPreview() {
     AddDeckScreen(
-        onNavigateBack = {}
+        onNavigateBack = {},
+        onNavigateHome = {},
     )
 }

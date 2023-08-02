@@ -32,14 +32,12 @@ fun DeckScreen(
     modifier: Modifier = Modifier,
     viewModel: DeckListViewModel = hiltViewModel(),
     onNavigateToDeck: (Deck) -> Unit,
-    onNavigateToAddFlashcard: (String) -> Unit,
     onNavigateToAddDeck: (String) -> Unit,
 ) {
     val deckList by viewModel.deckList.collectAsState(initial = emptyList())
     DeckScreen(
         flashCardDeckList = deckList,
         onNavigateToDeck = onNavigateToDeck,
-        onNavigateToAddFlashcard = onNavigateToAddFlashcard,
         onNavigateToAddDeck = onNavigateToAddDeck)
 }
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,7 +46,6 @@ fun DeckScreen(
     modifier: Modifier = Modifier,
     flashCardDeckList: List<Deck>,
     onNavigateToDeck: (Deck) -> Unit,
-    onNavigateToAddFlashcard: (String) -> Unit,
     onNavigateToAddDeck: (String) -> Unit,
 ) {
     Scaffold(
@@ -97,7 +94,6 @@ fun DeckScreenPreview() {
     AppTheme {
         DeckScreen(
             onNavigateToDeck = {},
-            onNavigateToAddFlashcard = {},
         ) {}
     }
 }

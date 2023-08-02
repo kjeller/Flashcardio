@@ -11,6 +11,12 @@ class DeckRepository @Inject constructor(private val deckDao: DeckDao) {
 
     fun getDeck(deckId: Long) = deckDao.getDeck(deckId)
 
+    suspend fun addDeck(deck: Deck) = deckDao.insert(deck)
+
+    suspend fun deleteDeck(deck: Deck) = deckDao.delete(deck)
+
+    suspend fun addCardToDeck(card: Flashcard) = deckDao.insert(card)
+
     companion object {
 
         // For Singleton instantiation

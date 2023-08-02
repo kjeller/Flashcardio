@@ -13,6 +13,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -31,9 +32,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import dev.stralman.flashcardio.R
 import dev.stralman.flashcardio.data.FakeRepository
 import dev.stralman.flashcardio.data.Deck
 import dev.stralman.flashcardio.ui.theme.AppTheme
@@ -82,7 +85,6 @@ fun FlashCard(
                             Modifier.align(Alignment.Center)
                         )
                     }
-
                     CardFace.BACK -> {
                         back(
                             Modifier.align(Alignment.Center)
@@ -124,14 +126,13 @@ fun FlashCardTextItem(
     )
 }
 
-
-
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun FlashCardScreen(
     modifier: Modifier = Modifier,
     deck: Deck,
     onNavigateBack: () -> Unit,
+    onNavigateToDeckSettings: () -> Unit,
 ) {
     var state by remember {
         mutableStateOf(CardFace.FRONT)
@@ -145,8 +146,15 @@ fun FlashCardScreen(
         topBar = {
             TopAppBar(
                 title = {
+                    var titleText = "${deck.name}:"
+
+                    titleText += if (deck.cards.isNotEmpty()) {
+                        " ${pageState.currentPage + 1}/${deck.cards.size}"
+                    } else {
+                        stringResource(R.string.flashcard_screen_empty_deck)
+                    }
                     Text(
-                        text = "${deck.name}: ${pageState.currentPage + 1}/${deck.cards.size}",
+                        text = titleText,
                         style = MaterialTheme.typography.titleLarge,
                     )
                 },
@@ -159,6 +167,18 @@ fun FlashCardScreen(
                         Icon(
                             Icons.Rounded.ArrowBack,
                             contentDescription = "Back"
+                        )
+                    }
+                },
+                actions = {
+                    IconButton(
+                        onClick = {
+                            onNavigateToDeckSettings()
+                        }
+                    ) {
+                        Icon(
+                            Icons.Rounded.Settings,
+                            contentDescription = "Settings"
                         )
                     }
                 }
@@ -204,6 +224,7 @@ fun FlashCardScreen(
     modifier: Modifier = Modifier,
     viewModel: FlashcardViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit,
+    onNavigateToDeckSettings: () -> Unit,
 ) {
     val deck = viewModel.deck.observeAsState().value
     if (deck != null) {
@@ -211,6 +232,7 @@ fun FlashCardScreen(
             modifier = modifier,
             deck = deck,
             onNavigateBack = onNavigateBack,
+            onNavigateToDeckSettings = onNavigateToDeckSettings,
         )
     }
 }
@@ -222,6 +244,7 @@ fun FlashCardScreenPreview() {
         FlashCardScreen(
             deck = FakeRepository().getFlashCardDeckMap()[0],
             onNavigateBack = {},
+            onNavigateToDeckSettings = {},
         )
     }
 }

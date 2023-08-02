@@ -12,7 +12,7 @@ data class Deck(
     @ColumnInfo(name = "deck_name")
     val name: String,
 
-    val cards: List<Flashcard>,
+    val cards: List<Flashcard> = emptyList(),
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "deck_id")
