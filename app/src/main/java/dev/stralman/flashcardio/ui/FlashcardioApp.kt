@@ -32,19 +32,16 @@ fun FlashcardioApp(
             }
         }
         composable(Destination.FlashcardScreen.route,
-            arguments = listOf(navArgument("deck_id") {
+            arguments = listOf(navArgument("deckId") {
                 type = NavType.StringType
             })) {
-            it.arguments?.getString("deck_id")?.let {deck_id ->
-                val deck_id = deck_id.toInt()
+            it.arguments?.getString("deckId")?.let {
                 FlashCardScreen(
-                    flashCardDeck = FakeRepository().getFlashCardDeckMap()[deck_id],
                     onNavigateBack = {
                         appState.onNavigateBack()
                     }
                 )
             }
-
         }
         composable(Destination.AddDeckScreen.route) {
             AddDeckScreen(

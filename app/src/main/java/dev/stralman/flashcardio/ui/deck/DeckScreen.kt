@@ -15,20 +15,39 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.stralman.flashcardio.R
-import dev.stralman.flashcardio.data.FakeRepository
-import dev.stralman.flashcardio.data.FlashcardDeck
+import dev.stralman.flashcardio.data.Deck
 import dev.stralman.flashcardio.ui.theme.AppTheme
 import dev.stralman.flashcardio.ui.util.ThemePreview
+import dev.stralman.flashcardio.viewmodels.DeckListViewModel
 
+@Composable
+fun DeckScreen(
+    modifier: Modifier = Modifier,
+    viewModel: DeckListViewModel = hiltViewModel(),
+    onNavigateToDeck: (Deck) -> Unit,
+    onNavigateToAddFlashcard: (String) -> Unit,
+    onNavigateToAddDeck: (String) -> Unit,
+) {
+    val deckList by viewModel.deckList.collectAsState(initial = emptyList())
+    DeckScreen(
+        flashCardDeckList = deckList,
+        onNavigateToDeck = onNavigateToDeck,
+        onNavigateToAddFlashcard = onNavigateToAddFlashcard,
+        onNavigateToAddDeck = onNavigateToAddDeck)
+}
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeckScreen(
     modifier: Modifier = Modifier,
-    onNavigateToDeck: (FlashcardDeck) -> Unit,
+    flashCardDeckList: List<Deck>,
+    onNavigateToDeck: (Deck) -> Unit,
     onNavigateToAddFlashcard: (String) -> Unit,
     onNavigateToAddDeck: (String) -> Unit,
 ) {
@@ -64,10 +83,8 @@ fun DeckScreen(
         ) { contentPadding ->
         // Screen content
         Box(modifier = Modifier.padding(contentPadding)) {
-            // TODO replace this with an actual data source
-            val flashCardDeckLists = FakeRepository().getFlashCardDeckMap()
             DeckItemCardList(
-                flashcardDeckList = flashCardDeckLists,
+                deckList = flashCardDeckList,
                 onNavigateToDeck = onNavigateToDeck,
             )
         }

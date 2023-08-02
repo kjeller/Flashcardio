@@ -16,20 +16,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.stralman.flashcardio.data.FakeRepository
-import dev.stralman.flashcardio.data.FlashcardDeck
+import dev.stralman.flashcardio.data.Deck
 import dev.stralman.flashcardio.ui.theme.AppTheme
 import dev.stralman.flashcardio.ui.util.ThemePreview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeckItemCard(
-    flashcardDeck: FlashcardDeck,
-    onNavigateToDeck: (FlashcardDeck) -> Unit,
+    deck: Deck,
+    onNavigateToDeck: (Deck) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier,
-        onClick = { onNavigateToDeck(flashcardDeck) },
+        onClick = { onNavigateToDeck(deck) },
     ) {
         Row(
             modifier = modifier
@@ -39,15 +39,15 @@ fun DeckItemCard(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = flashcardDeck.name,
+                text = deck.name,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Left
             )
 
-            val setListSize = if (flashcardDeck.cards.size > 100) {
+            val setListSize = if (deck.cards.size > 100) {
                 "99+"
             } else {
-                "${flashcardDeck.cards.size}"
+                "${deck.cards.size}"
             }
             Text(
                 text = setListSize,
@@ -60,14 +60,14 @@ fun DeckItemCard(
 
 @Composable
 fun DeckItemCardList(
-    flashcardDeckList: List<FlashcardDeck>,
-    onNavigateToDeck: (FlashcardDeck) -> Unit,
+    deckList: List<Deck>,
+    onNavigateToDeck: (Deck) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(modifier = modifier) {
-        items(flashcardDeckList) { flashCardSet ->
+        items(deckList) { flashCardSet ->
             DeckItemCard(
-                flashcardDeck = flashCardSet,
+                deck = flashCardSet,
                 onNavigateToDeck = onNavigateToDeck,
                 modifier = Modifier.padding(8.dp),
             )
@@ -80,7 +80,7 @@ fun DeckItemCardList(
 fun DeckItemCardPreview() {
     AppTheme {
         DeckItemCardList(
-            flashcardDeckList = FakeRepository().getFlashCardDeckMap(),
+            deckList = FakeRepository().getFlashCardDeckMap(),
             onNavigateToDeck = {},
         )
     }

@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Korean common phrases (한글)",
+    "cards":
+    [
+      {
+        "frontText": "안녕하세요",
+        "backText": "Hello (annyeonghaseyo)"
+      }
+    ]
+  },
+  {
+    "name": "NATO Phonetic Alphabet",
+    "cards":
+    [
+      {
+        "frontText": "A",
+        "backText": "Alpha"
+      },
+      {
+        "frontText": "B",
+        "backText": "Bravo"
+      },
+      {
+        "frontText": "C",
+        "backText": "Charlie"
+      }
+    ]
+  }
+]
