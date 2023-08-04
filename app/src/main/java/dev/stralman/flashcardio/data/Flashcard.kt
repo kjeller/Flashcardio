@@ -16,7 +16,10 @@ data class Flashcard(
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "card_id")
-    val id: Long = 0
+    val id: Long = 0,
+
+    @ColumnInfo(name = "deck_id")
+    val deckId: Long = -1,
 ) {
     override fun toString() = "front: $frontText, back: $backText"
 }

@@ -37,8 +37,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.stralman.flashcardio.R
-import dev.stralman.flashcardio.data.Deck
 import dev.stralman.flashcardio.data.FakeRepository
+import dev.stralman.flashcardio.data.FlashcardDeck
 import dev.stralman.flashcardio.ui.theme.AppTheme
 import dev.stralman.flashcardio.ui.util.ThemePreview
 import dev.stralman.flashcardio.viewmodels.FlashcardViewModel
@@ -131,7 +131,7 @@ fun FlashCardTextItem(
 @Composable
 fun FlashCardScreen(
     modifier: Modifier = Modifier,
-    deck: Deck,
+    flashcardDeck: FlashcardDeck,
     onNavigateBack: () -> Unit,
     onNavigateToDeckSettings: () -> Unit,
 ) {
@@ -147,10 +147,10 @@ fun FlashCardScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    var titleText = "${deck.name}:"
+                    var titleText = "${flashcardDeck.deck.name}:"
 
-                    titleText += if (deck.cards.isNotEmpty()) {
-                        " ${pageState.currentPage + 1}/${deck.cards.size}"
+                    titleText += if (flashcardDeck.cards.isNotEmpty()) {
+                        " ${pageState.currentPage + 1}/${flashcardDeck.cards.size}"
                     } else {
                         stringResource(R.string.flashcard_screen_empty_deck)
                     }
@@ -201,7 +201,7 @@ fun FlashCardScreen(
 
         ) { contentPadding ->
         HorizontalPager(
-            pageCount = deck.cards.size,
+            pageCount = flashcardDeck.cards.size,
             state = pageState,
         ) { page ->
             Box(
@@ -210,8 +210,8 @@ fun FlashCardScreen(
                     .padding(15.dp)
             ) {
                 FlashCardTextItem(
-                    front = deck.cards[page].frontText,
-                    back = deck.cards[page].backText,
+                    front = flashcardDeck.cards[page].frontText,
+                    back = flashcardDeck.cards[page].backText,
                     cardFace = state,
                     onClick = {
                         state = it.next()
@@ -229,11 +229,11 @@ fun FlashCardScreen(
     onNavigateBack: () -> Unit,
     onNavigateToDeckSettings: () -> Unit,
 ) {
-    val deck = viewModel.deck.observeAsState().value
-    if (deck != null) {
+    val flashcardDeck = viewModel.flashcardDeck.observeAsState().value
+    if (flashcardDeck != null) {
         FlashCardScreen(
             modifier = modifier,
-            deck = deck,
+            flashcardDeck = flashcardDeck,
             onNavigateBack = onNavigateBack,
             onNavigateToDeckSettings = onNavigateToDeckSettings,
         )
@@ -245,7 +245,7 @@ fun FlashCardScreen(
 fun FlashCardScreenPreview() {
     AppTheme {
         FlashCardScreen(
-            deck = FakeRepository().getFlashCardDeckMap()[0],
+            flashcardDeck = FakeRepository().getFlashCardDeckMap()[0],
             onNavigateBack = {},
             onNavigateToDeckSettings = {},
         )

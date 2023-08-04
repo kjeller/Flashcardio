@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.stralman.flashcardio.R
 import dev.stralman.flashcardio.data.Deck
+import dev.stralman.flashcardio.data.FlashcardDeck
 import dev.stralman.flashcardio.ui.theme.AppTheme
 import dev.stralman.flashcardio.ui.util.ThemePreview
 import dev.stralman.flashcardio.viewmodels.DeckListViewModel
@@ -31,12 +32,12 @@ import dev.stralman.flashcardio.viewmodels.DeckListViewModel
 fun DeckScreen(
     modifier: Modifier = Modifier,
     viewModel: DeckListViewModel = hiltViewModel(),
-    onNavigateToDeck: (Deck) -> Unit,
+    onNavigateToDeck: (FlashcardDeck) -> Unit,
     onNavigateToAddDeck: (String) -> Unit,
 ) {
-    val deckList by viewModel.deckList.collectAsState(initial = emptyList())
+    val flashcardDeckList by viewModel.flashcardDeckList.collectAsState(initial = emptyList())
     DeckScreen(
-        flashCardDeckList = deckList,
+        flashCardDeckList = flashcardDeckList,
         onNavigateToDeck = onNavigateToDeck,
         onNavigateToAddDeck = onNavigateToAddDeck
     )
@@ -46,8 +47,8 @@ fun DeckScreen(
 @Composable
 fun DeckScreen(
     modifier: Modifier = Modifier,
-    flashCardDeckList: List<Deck>,
-    onNavigateToDeck: (Deck) -> Unit,
+    flashCardDeckList: List<FlashcardDeck>,
+    onNavigateToDeck: (FlashcardDeck) -> Unit,
     onNavigateToAddDeck: (String) -> Unit,
 ) {
     Scaffold(

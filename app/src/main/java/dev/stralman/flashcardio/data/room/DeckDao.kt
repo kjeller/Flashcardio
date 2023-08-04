@@ -7,15 +7,16 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import dev.stralman.flashcardio.data.Deck
 import dev.stralman.flashcardio.data.Flashcard
+import dev.stralman.flashcardio.data.FlashcardDeck
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DeckDao {
     @Query("SELECT * FROM decks ORDER BY deck_id")
-    fun getDecks(): Flow<List<Deck>>
+    fun getDecks(): Flow<List<FlashcardDeck>>
 
     @Query("SELECT * FROM decks WHERE deck_id = :deckId")
-    fun getDeck(deckId: Long): Flow<Deck>
+    fun getDeck(deckId: Long): Flow<FlashcardDeck>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(deck: Deck)

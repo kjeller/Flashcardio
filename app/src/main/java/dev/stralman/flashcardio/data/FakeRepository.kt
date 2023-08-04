@@ -1,10 +1,12 @@
 package dev.stralman.flashcardio.data
 
 class FakeRepository(
-    private val flashCardDeckLists: List<Deck> =
+    private val flashCardDeckLists: List<FlashcardDeck> =
         listOf(
-            Deck(
-                name = "Korean common phrases (한글)",
+            FlashcardDeck(
+                Deck(
+                    name = "Korean common phrases (한글)",
+                ),
                 cards = listOf(
                     Flashcard(
                         frontText = "안녕하세요",
@@ -12,8 +14,10 @@ class FakeRepository(
                     ),
                 )
             ),
-            Deck(
-                name = "NATO Phonetic Alphabet",
+            FlashcardDeck(
+                Deck(
+                    name = "NATO Phonetic Alphabet",
+                ),
                 cards = listOf(
                     Flashcard(
                         frontText = "A",
@@ -32,7 +36,7 @@ class FakeRepository(
         )
 ) {
 
-    fun getFlashCardDeckMap(): List<Deck> {
+    fun getFlashCardDeckMap(): List<FlashcardDeck> {
         return flashCardDeckLists
     }
 }

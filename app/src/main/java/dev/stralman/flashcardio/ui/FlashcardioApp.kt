@@ -21,11 +21,12 @@ fun FlashcardioApp(
     ) {
         composable(Destination.HomeScreen.route) {
             DeckScreen(
-                onNavigateToDeck = { appState.onNavigateToDeck("${it.id}") },
+                onNavigateToDeck = { flashcardDeck -> appState.onNavigateToDeck("${flashcardDeck.deck.id}") },
                 onNavigateToAddDeck = { appState.onNavigateToAddDeckScreen() }
             )
         }
-        composable(Destination.FlashcardScreen.route,
+        composable(
+            Destination.FlashcardScreen.route,
             arguments = listOf(navArgument("deckId") {
                 type = NavType.StringType
             })
@@ -45,7 +46,8 @@ fun FlashcardioApp(
                 onNavigateHome = { appState.onNavigateHome() },
             )
         }
-        composable(Destination.AddFlashCardScreen.route,
+        composable(
+            Destination.AddFlashCardScreen.route,
             arguments = listOf(navArgument("deckId") {
                 type = NavType.StringType
             })
@@ -56,7 +58,8 @@ fun FlashcardioApp(
                 )
             }
         }
-        composable(Destination.DeckSettingsScreen.route,
+        composable(
+            Destination.DeckSettingsScreen.route,
             arguments = listOf(navArgument("deckId") {
                 type = NavType.StringType
             })

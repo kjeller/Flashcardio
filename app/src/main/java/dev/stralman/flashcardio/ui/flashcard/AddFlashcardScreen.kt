@@ -25,11 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -39,21 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import dev.stralman.flashcardio.R
 import dev.stralman.flashcardio.ui.util.ThemePreview
 import dev.stralman.flashcardio.viewmodels.AddFlashcardViewModel
-
-enum class FlashCardType {
-    SIMPLE_TEXT_ITEM {
-        override fun getDescriptionResourceId(): Int {
-            return R.string.flashcardtype_simple_text_enum_desc
-        }
-    },
-    RICH_TEXT_ITEM {
-        override fun getDescriptionResourceId(): Int {
-            return R.string.flashcardtype_rich_text_enum_desc
-        }
-    };
-
-    abstract fun getDescriptionResourceId(): Int
-}
+import dev.stralman.flashcardio.viewmodels.FlashCardType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,9 +43,6 @@ fun AddFlashCardScreen(
     viewModel: AddFlashcardViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit,
 ) {
-    var state by remember { mutableStateOf(FlashCardType.SIMPLE_TEXT_ITEM) }
-    val frontText = remember { mutableStateOf("") }
-    val backText = remember { mutableStateOf("") }
     Scaffold(
         modifier = modifier
             .fillMaxWidth()
@@ -95,10 +73,7 @@ fun AddFlashCardScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    viewModel.addCardToDeck(
-                        frontText = frontText.value,
-                        backText = backText.value,
-                    )
+                    viewModel.addCardToDeck()
                     onNavigateBack()
                 }
             ) {
@@ -117,35 +92,34 @@ fun AddFlashCardScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = modifier.selectableGroup(),
             ) {
-                FlashCardType.values().forEach {
+                FlashCardType.values().forEach {flashcardType ->
                     Row(
                         Modifier
                             .fillMaxWidth()
                             .height(56.dp)
                             .selectable(
-                                selected = (state == it),
-                                onClick = { state = it },
+                                selected = (viewModel.flashcardType == flashcardType),
+                                onClick = { viewModel.updateFlashcardType(flashcardType) },
                                 role = Role.RadioButton
                             )
                             .padding(horizontal = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
-                            selected = state == it,
-                            onClick = { state = it },
+                            selected = (viewModel.flashcardType == flashcardType),
+                            onClick = { viewModel.updateFlashcardType(flashcardType) },
                         )
                         Text(
-                            text = stringResource(id = it.getDescriptionResourceId()),
+                            text = stringResource(id = flashcardType.getDescriptionResourceId()),
                             style = MaterialTheme.typography.bodyMedium,
                         )
                     }
                 }
-                when (state) {
+                when (viewModel.flashcardType) {
                     FlashCardType.SIMPLE_TEXT_ITEM ->
                         AddFlashCardTextItem(
                             modifier = modifier,
-                            frontText = frontText,
-                            backText = backText
+                            viewModel = viewModel,
                         )
 
                     FlashCardType.RICH_TEXT_ITEM ->
@@ -158,19 +132,17 @@ fun AddFlashCardScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddFlashCardTextItem(
     modifier: Modifier = Modifier,
-    frontText: MutableState<String>,
-    backText: MutableState<String>,
+    viewModel: AddFlashcardViewModel,
 ) {
     TextField(
         modifier = modifier
             .fillMaxWidth()
             .padding(20.dp),
-        value = frontText.value,
-        onValueChange = { frontText.value = it },
+        value = viewModel.frontText,
+        onValueChange = { frontText -> viewModel.updateFrontText(frontText) },
         label = {
             Text(
                 text = stringResource(R.string.add_flashcard_text_item_front_text),
@@ -182,8 +154,8 @@ fun AddFlashCardTextItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(20.dp),
-        value = backText.value,
-        onValueChange = { backText.value = it },
+        value = viewModel.backText,
+        onValueChange = { backText -> viewModel.updateBackText(backText) },
         label = {
             Text(
                 text = stringResource(R.string.add_flashcard_text_item_back_text),

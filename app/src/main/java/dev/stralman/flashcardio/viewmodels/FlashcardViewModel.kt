@@ -6,6 +6,7 @@ import androidx.lifecycle.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.stralman.flashcardio.data.DeckRepository
 import dev.stralman.flashcardio.data.Flashcard
+import dev.stralman.flashcardio.data.FlashcardDeck
 import javax.inject.Inject
 
 /**
@@ -21,7 +22,7 @@ class FlashcardViewModel @Inject internal constructor(
      *  To cache this correctly this needs to match with [Destination.FlashcardScreen]
      */
     private val deckId: Long = savedStateHandle.get<String>(ID_SAVED_STATE_KEY)?.toLong()!!
-    val deck = deckRepository.getDeck(deckId).asLiveData()
+    val flashcardDeck = deckRepository.getDeck(deckId).asLiveData()
 
     companion object {
         private const val ID_SAVED_STATE_KEY = "deckId"

@@ -1,8 +1,11 @@
 package dev.stralman.flashcardio.data
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Relation
+import java.util.Calendar
 
 @Entity(
     tableName = "decks",
@@ -11,9 +14,17 @@ data class Deck(
     @ColumnInfo(name = "deck_name")
     val name: String,
 
-    val cards: List<Flashcard> = emptyList(),
+    @ColumnInfo(name = "deck_create_date")
+    val date: Calendar = Calendar.getInstance(),
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "deck_id")
     val id: Long = 0
+)
+
+data class FlashcardDeck(
+    @Embedded
+    val deck: Deck,
+    @Relation(parentColumn = "deck_id", entityColumn = "card_id")
+    val cards: List<Flashcard> = emptyList(),
 )

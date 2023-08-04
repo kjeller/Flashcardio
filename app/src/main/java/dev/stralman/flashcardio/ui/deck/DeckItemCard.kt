@@ -17,19 +17,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.stralman.flashcardio.data.Deck
 import dev.stralman.flashcardio.data.FakeRepository
+import dev.stralman.flashcardio.data.FlashcardDeck
 import dev.stralman.flashcardio.ui.theme.AppTheme
 import dev.stralman.flashcardio.ui.util.ThemePreview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeckItemCard(
-    deck: Deck,
-    onNavigateToDeck: (Deck) -> Unit,
+    flashcardDeck: FlashcardDeck,
+    onNavigateToDeck: (FlashcardDeck) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier,
-        onClick = { onNavigateToDeck(deck) },
+        onClick = { onNavigateToDeck(flashcardDeck) },
     ) {
         Row(
             modifier = modifier
@@ -39,15 +40,15 @@ fun DeckItemCard(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = deck.name,
+                text = flashcardDeck.deck.name,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Left
             )
 
-            val setListSize = if (deck.cards.size > 100) {
+            val setListSize = if (flashcardDeck.cards.size > 100) {
                 "99+"
             } else {
-                "${deck.cards.size}"
+                "${flashcardDeck.cards.size}"
             }
             Text(
                 text = setListSize,
@@ -60,14 +61,14 @@ fun DeckItemCard(
 
 @Composable
 fun DeckItemCardList(
-    deckList: List<Deck>,
-    onNavigateToDeck: (Deck) -> Unit,
+    deckList: List<FlashcardDeck>,
+    onNavigateToDeck: (FlashcardDeck) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(modifier = modifier) {
-        items(deckList) { flashCardSet ->
+        items(deckList) { flashcardDeck ->
             DeckItemCard(
-                deck = flashCardSet,
+                flashcardDeck = flashcardDeck,
                 onNavigateToDeck = onNavigateToDeck,
                 modifier = Modifier.padding(8.dp),
             )

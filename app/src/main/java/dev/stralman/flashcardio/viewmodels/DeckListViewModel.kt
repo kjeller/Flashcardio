@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.stralman.flashcardio.data.Deck
 import dev.stralman.flashcardio.data.DeckRepository
+import dev.stralman.flashcardio.data.FlashcardDeck
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -11,6 +12,6 @@ import javax.inject.Inject
 class DeckListViewModel @Inject internal constructor(
     deckRepository: DeckRepository
 ) : ViewModel() {
-    val deckList: Flow<List<Deck>> =
+    val flashcardDeckList: Flow<List<FlashcardDeck>> =
         deckRepository.getDecks()
 }
