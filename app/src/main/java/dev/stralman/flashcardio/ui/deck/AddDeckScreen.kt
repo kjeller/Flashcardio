@@ -42,7 +42,6 @@ fun AddDeckScreen(
     onNavigateHome: () -> Unit,
     viewModel: AddDeckViewModel = hiltViewModel(),
 ) {
-    var deckName by remember { mutableStateOf("") }
     Scaffold(
         modifier = modifier
             .fillMaxWidth()
@@ -67,14 +66,13 @@ fun AddDeckScreen(
                             contentDescription = "Back"
                         )
                     }
-
                 }
             )
         },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    viewModel.addDeck(deckName)
+                    viewModel.addDeck()
                     onNavigateHome()
                 }
             ) {
@@ -98,8 +96,8 @@ fun AddDeckScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(20.dp),
-                    value = deckName,
-                    onValueChange = { deckName = it },
+                    value = viewModel.deckName,
+                    onValueChange = { deckName -> viewModel.updateDeckName(deckName) },
                     label = {
                         Text(
                             text = stringResource(R.string.add_deck_name_field),

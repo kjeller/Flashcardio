@@ -1,5 +1,9 @@
 package dev.stralman.flashcardio.viewmodels
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,9 +17,16 @@ class AddDeckViewModel  @Inject internal constructor(
     private val deckRepository: DeckRepository
 ) : ViewModel() {
 
-    fun addDeck(name: String) {
+    var deckName by mutableStateOf("")
+        private set
+
+    fun updateDeckName(input: String) {
+        deckName = input
+    }
+
+    fun addDeck() {
         viewModelScope.launch {
-            val deck = Deck(name)
+            val deck = Deck(deckName)
             deckRepository.addDeck(deck)
         }
     }
