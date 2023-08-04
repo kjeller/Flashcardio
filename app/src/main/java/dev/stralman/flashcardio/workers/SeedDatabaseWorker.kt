@@ -8,6 +8,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import dev.stralman.flashcardio.data.Deck
+import dev.stralman.flashcardio.data.FlashcardDeck
 import dev.stralman.flashcardio.data.room.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -22,11 +23,21 @@ class SeedDatabaseWorker(
             if (filename != null) {
                 applicationContext.assets.open(filename).use { inputStream ->
                     JsonReader(inputStream.reader()).use { jsonReader ->
-                        val deckType = object : TypeToken<List<Deck>>() {}.type
-                        val deckList: List<Deck> = Gson().fromJson(jsonReader, deckType)
+                        val deckType = object : TypeToken<List<FlashcardDeck>>() {}.type
+                        val deckList: List<FlashcardDeck> = Gson().fromJson(jsonReader, deckType)
 
                         val database = AppDatabase.getInstance(applicationContext)
-                        database.deckDao().insertAll(deckList)
+                        var id: Long = 1
+                        deckList.forEach {deck->
+                            deck.deck.id = id
+                            database.deckDao().insert(deck.deck)
+
+                            deck.cards.forEach {card ->
+                                card.deckId = deck.deck.id
+                            }
+                            database.deckDao().insertAll(deck.cards)
+                            id += 1
+                        }
 
                         Result.success()
                     }

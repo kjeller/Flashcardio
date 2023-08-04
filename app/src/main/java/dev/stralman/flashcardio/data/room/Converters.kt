@@ -4,10 +4,17 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dev.stralman.flashcardio.data.Flashcard
+import dev.stralman.flashcardio.data.FlashcardDeck
 import java.util.Calendar
 
 
 class Converters {
+
+    @TypeConverter
+    fun flashcardDeckFromJson(jsonString: String): FlashcardDeck {
+        val type = object : TypeToken<FlashcardDeck>() {}.type
+        return Gson().fromJson(jsonString, type)
+    }
     @TypeConverter
     fun flashcardFromJson(jsonString: String): Flashcard {
         val type = object : TypeToken<Flashcard>() {}.type

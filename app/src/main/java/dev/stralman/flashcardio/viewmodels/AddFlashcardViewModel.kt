@@ -3,20 +3,30 @@ package dev.stralman.flashcardio.viewmodels
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.stralman.flashcardio.R
 import dev.stralman.flashcardio.data.Deck
 import dev.stralman.flashcardio.data.DeckRepository
 import dev.stralman.flashcardio.data.Flashcard
+import dev.stralman.flashcardio.viewmodels.Constants.Companion.ID_SAVED_STATE_KEY
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AddFlashcardViewModel @Inject internal constructor(
+    savedStateHandle: SavedStateHandle,
     private val deckRepository: DeckRepository
 ) : ViewModel() {
+
+    /**
+     *  To cache this correctly this needs to match with [Destination.FlashcardScreen]
+     */
+    private val deckId: Long = savedStateHandle.get<String>(ID_SAVED_STATE_KEY)?.toLong()!!
+    val flashcardDeck = deckRepository.getDeck(deckId).asLiveData()
 
     var frontText by mutableStateOf("")
         private set
@@ -44,14 +54,15 @@ class AddFlashcardViewModel @Inject internal constructor(
             val card = Flashcard(
                 frontText = frontText,
                 backText = backText,
+                deckId = deckId,
             )
             deckRepository.addCardToDeck(card)
         }
     }
 
-    fun deleteDeck(deck: Deck) {
+    fun deleteDeck() {
         viewModelScope.launch {
-            deckRepository.deleteDeck(deck)
+            flashcardDeck.value?.let { deckRepository.deleteDeck(it.deck) }
         }
     }
 }

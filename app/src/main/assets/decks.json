@@ -1,6 +1,8 @@
 [
   {
-    "name": "Korean common phrases (한글)",
+    "deck": {
+      "name": "Korean common phrases (한글)"
+    },
     "cards": [
       {
         "frontText": "안녕하세요",
@@ -9,7 +11,9 @@
     ]
   },
   {
-    "name": "NATO Phonetic Alphabet",
+    "deck": {
+      "name": "NATO Phonetic Alphabet"
+    },
     "cards": [
       {
         "frontText": "A",

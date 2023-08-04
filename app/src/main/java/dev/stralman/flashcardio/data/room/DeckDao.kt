@@ -25,7 +25,7 @@ interface DeckDao {
     suspend fun insert(card: Flashcard)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(decks: List<Deck>)
+    suspend fun insertAll(decks: List<Flashcard>)
 
     @Delete
     suspend fun delete(deck: Deck)

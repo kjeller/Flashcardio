@@ -74,7 +74,7 @@ fun AddFlashCardScreen(
             FloatingActionButton(
                 onClick = {
                     viewModel.addCardToDeck()
-                    onNavigateBack()
+                    //onNavigateBack()
                 }
             ) {
                 Icon(

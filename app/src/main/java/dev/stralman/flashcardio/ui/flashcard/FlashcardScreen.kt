@@ -135,7 +135,7 @@ fun FlashCardScreen(
     onNavigateBack: () -> Unit,
     onNavigateToDeckSettings: () -> Unit,
 ) {
-    var state by remember {
+    var cardState by remember {
         mutableStateOf(CardFace.FRONT)
     }
     val pageState = rememberPagerState(0)
@@ -212,9 +212,9 @@ fun FlashCardScreen(
                 FlashCardTextItem(
                     front = flashcardDeck.cards[page].frontText,
                     back = flashcardDeck.cards[page].backText,
-                    cardFace = state,
+                    cardFace = cardState,
                     onClick = {
-                        state = it.next()
+                        cardState = it.next()
                     },
                 )
             }

@@ -14,17 +14,17 @@ data class Deck(
     @ColumnInfo(name = "deck_name")
     val name: String,
 
-    @ColumnInfo(name = "deck_create_date")
-    val date: Calendar = Calendar.getInstance(),
+    /*@ColumnInfo(name = "deck_create_date")
+    val date: Calendar = Calendar.getInstance(),*/
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "deck_id")
-    val id: Long = 0
+    var id: Long = 0,
 )
 
 data class FlashcardDeck(
     @Embedded
     val deck: Deck,
-    @Relation(parentColumn = "deck_id", entityColumn = "card_id")
+    @Relation(parentColumn = "deck_id", entityColumn = "deck_id")
     val cards: List<Flashcard> = emptyList(),
 )
