@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.Lifecycle
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
@@ -15,14 +13,16 @@ import androidx.navigation.compose.rememberNavController
 sealed class Destination(val route: String) {
     object HomeScreen : Destination("home")
     object FlashcardScreen : Destination("deck/{deckId}") {
-        fun createRoute(id : String) = "deck/$id"
+        fun createRoute(id: String) = "deck/$id"
     }
+
     object DeckSettingsScreen : Destination("deck/{deckId}/settings") {
-        fun createRoute(id : String) = "deck/$id/settings"
+        fun createRoute(id: String) = "deck/$id/settings"
     }
+
     object AddDeckScreen : Destination("deck/add")
     object AddFlashCardScreen : Destination("deck/{deckId}/add") {
-        fun createRoute(id : String) = "deck/$id/add"
+        fun createRoute(id: String) = "deck/$id/add"
     }
 }
 

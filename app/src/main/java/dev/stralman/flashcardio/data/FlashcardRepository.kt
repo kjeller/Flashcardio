@@ -14,7 +14,8 @@ class FlashcardRepository @Inject constructor(private val flashcardDao: Flashcar
     companion object {
 
         // For Singleton instantiation
-        @Volatile private var instance: FlashcardRepository? = null
+        @Volatile
+        private var instance: FlashcardRepository? = null
 
         fun getInstance(flashcardDao: FlashcardDao) =
             instance ?: synchronized(this) {

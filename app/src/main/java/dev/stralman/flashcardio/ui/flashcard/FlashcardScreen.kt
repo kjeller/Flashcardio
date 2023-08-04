@@ -37,8 +37,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.stralman.flashcardio.R
-import dev.stralman.flashcardio.data.FakeRepository
 import dev.stralman.flashcardio.data.Deck
+import dev.stralman.flashcardio.data.FakeRepository
 import dev.stralman.flashcardio.ui.theme.AppTheme
 import dev.stralman.flashcardio.ui.util.ThemePreview
 import dev.stralman.flashcardio.viewmodels.FlashcardViewModel
@@ -85,6 +85,7 @@ fun FlashCard(
                             Modifier.align(Alignment.Center)
                         )
                     }
+
                     CardFace.BACK -> {
                         back(
                             Modifier.align(Alignment.Center)
@@ -203,9 +204,11 @@ fun FlashCardScreen(
             pageCount = deck.cards.size,
             state = pageState,
         ) { page ->
-            Box(modifier = Modifier
-                .padding(contentPadding)
-                .padding(15.dp)) {
+            Box(
+                modifier = Modifier
+                    .padding(contentPadding)
+                    .padding(15.dp)
+            ) {
                 FlashCardTextItem(
                     front = deck.cards[page].frontText,
                     back = deck.cards[page].backText,

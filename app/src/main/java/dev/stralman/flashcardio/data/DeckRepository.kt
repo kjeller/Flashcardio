@@ -20,7 +20,8 @@ class DeckRepository @Inject constructor(private val deckDao: DeckDao) {
     companion object {
 
         // For Singleton instantiation
-        @Volatile private var instance: DeckRepository? = null
+        @Volatile
+        private var instance: DeckRepository? = null
 
         fun getInstance(deckDao: DeckDao) =
             instance ?: synchronized(this) {

@@ -9,8 +9,8 @@ import java.util.Calendar
 
 class Converters {
     @TypeConverter
-    fun flashcardFromJson(jsonString: String) : Flashcard {
-        val type = object : TypeToken<Flashcard>() { }.type
+    fun flashcardFromJson(jsonString: String): Flashcard {
+        val type = object : TypeToken<Flashcard>() {}.type
         return Gson().fromJson(jsonString, type)
     }
 
@@ -19,7 +19,7 @@ class Converters {
         if (jsonString.isEmpty()) {
             return emptyList()
         }
-        val type = object : TypeToken<List<Flashcard>>() { }.type
+        val type = object : TypeToken<List<Flashcard>>() {}.type
         return Gson().fromJson(jsonString, type)
     }
 

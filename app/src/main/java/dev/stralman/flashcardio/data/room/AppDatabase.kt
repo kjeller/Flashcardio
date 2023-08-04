@@ -9,8 +9,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import dev.stralman.flashcardio.data.Flashcard
 import dev.stralman.flashcardio.data.Deck
+import dev.stralman.flashcardio.data.Flashcard
 import dev.stralman.flashcardio.utlities.DATABASE_NAME
 import dev.stralman.flashcardio.utlities.DECK_DATA_FILENAME
 import dev.stralman.flashcardio.workers.SeedDatabaseWorker
@@ -28,7 +28,8 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
 
         // For Singleton instantiation
-        @Volatile private var instance: AppDatabase? = null
+        @Volatile
+        private var instance: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase {
             return instance ?: synchronized(this) {
@@ -41,7 +42,7 @@ abstract class AppDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context): AppDatabase {
             return Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
                 .addCallback(
-                    object : RoomDatabase.Callback() {
+                    object : Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
                             val request = OneTimeWorkRequestBuilder<SeedDatabaseWorker>()

@@ -38,8 +38,10 @@ fun DeckScreen(
     DeckScreen(
         flashCardDeckList = deckList,
         onNavigateToDeck = onNavigateToDeck,
-        onNavigateToAddDeck = onNavigateToAddDeck)
+        onNavigateToAddDeck = onNavigateToAddDeck
+    )
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeckScreen(

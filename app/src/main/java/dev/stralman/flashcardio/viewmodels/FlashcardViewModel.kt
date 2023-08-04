@@ -3,12 +3,9 @@ package dev.stralman.flashcardio.viewmodels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.stralman.flashcardio.data.DeckRepository
 import dev.stralman.flashcardio.data.Flashcard
-import dev.stralman.flashcardio.data.FlashcardRepository
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**

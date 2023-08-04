@@ -2,7 +2,6 @@ package dev.stralman.flashcardio.viewmodels
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddDeckViewModel  @Inject internal constructor(
+class AddDeckViewModel @Inject internal constructor(
     private val deckRepository: DeckRepository
 ) : ViewModel() {
 

@@ -15,8 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import dev.stralman.flashcardio.data.FakeRepository
 import dev.stralman.flashcardio.data.Deck
+import dev.stralman.flashcardio.data.FakeRepository
 import dev.stralman.flashcardio.ui.theme.AppTheme
 import dev.stralman.flashcardio.ui.util.ThemePreview
 

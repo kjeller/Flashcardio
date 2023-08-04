@@ -62,7 +62,7 @@ fun DeckSettingsScreen(
                 }
             )
         },
-        ) { contentPadding ->
+    ) { contentPadding ->
         // Screen content
         Column(modifier = Modifier.padding(contentPadding)) {
             DeckSettingCard(
@@ -79,7 +79,7 @@ fun DeckSettingsScreen(
             )
             DeckSettingCard(
                 modifier = modifier,
-                onClickSettingCard = { /* TODO */},
+                onClickSettingCard = { /* TODO */ },
                 icon = {
                     Icon(
                         Icons.Rounded.Clear,

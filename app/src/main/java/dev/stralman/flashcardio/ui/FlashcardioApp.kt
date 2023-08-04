@@ -5,7 +5,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import dev.stralman.flashcardio.data.FakeRepository
 import dev.stralman.flashcardio.ui.deck.AddDeckScreen
 import dev.stralman.flashcardio.ui.deck.DeckScreen
 import dev.stralman.flashcardio.ui.deck.DeckSettingsScreen
@@ -29,7 +28,8 @@ fun FlashcardioApp(
         composable(Destination.FlashcardScreen.route,
             arguments = listOf(navArgument("deckId") {
                 type = NavType.StringType
-            })) {
+            })
+        ) {
             it.arguments?.getString("deckId")?.let {
                 FlashCardScreen(
                     onNavigateBack = { appState.onNavigateBack() },
@@ -37,7 +37,8 @@ fun FlashcardioApp(
                 )
             }
         }
-        composable(Destination.AddDeckScreen.route,
+        composable(
+            Destination.AddDeckScreen.route,
         ) {
             AddDeckScreen(
                 onNavigateBack = { appState.onNavigateBack() },
@@ -47,7 +48,8 @@ fun FlashcardioApp(
         composable(Destination.AddFlashCardScreen.route,
             arguments = listOf(navArgument("deckId") {
                 type = NavType.StringType
-            })) {
+            })
+        ) {
             it.arguments?.getString("deckId")?.let {
                 AddFlashCardScreen(
                     onNavigateBack = { appState.onNavigateBack() },
@@ -57,7 +59,8 @@ fun FlashcardioApp(
         composable(Destination.DeckSettingsScreen.route,
             arguments = listOf(navArgument("deckId") {
                 type = NavType.StringType
-            })) {
+            })
+        ) {
             it.arguments?.getString("deckId")?.let {
                 DeckSettingsScreen(
                     onNavigateBack = { appState.onNavigateBack() },
