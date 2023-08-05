@@ -17,10 +17,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import dev.stralman.flashcardio.R
 import dev.stralman.flashcardio.ui.util.ThemePreview
 import dev.stralman.flashcardio.viewmodels.AddDeckViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,7 +43,12 @@ fun AddDeckScreen(
     onNavigateHome: () -> Unit,
     viewModel: AddDeckViewModel = hiltViewModel(),
 ) {
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
         modifier = modifier
             .fillMaxWidth()
             .padding(16.dp)
@@ -68,8 +78,11 @@ fun AddDeckScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    viewModel.addDeck()
-                    onNavigateHome()
+                    scope.launch {
+                        viewModel.addDeck()
+                        snackbarHostState.showSnackbar("Successfully added deck to database")
+                        onNavigateHome()
+                    }
                 }
             ) {
                 Icon(

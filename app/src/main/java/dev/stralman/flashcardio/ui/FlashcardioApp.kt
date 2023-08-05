@@ -68,7 +68,7 @@ fun FlashcardioApp(
                 DeckSettingsScreen(
                     onNavigateBack = { appState.onNavigateBack() },
                     onNavigateAddFlashcard = { appState.onNavigateToAddFlashcardScreen(it) },
-                    onNavigateRemoveFlashcard = {}
+                    onNavigateHome = { appState.onNavigateHome() },
                 )
             }
         }

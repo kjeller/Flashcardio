@@ -7,33 +7,42 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.stralman.flashcardio.R
 import dev.stralman.flashcardio.ui.util.ThemePreview
+import dev.stralman.flashcardio.viewmodels.DeckSettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeckSettingsScreen(
     modifier: Modifier = Modifier,
+    viewModel: DeckSettingsViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit,
     onNavigateAddFlashcard: () -> Unit,
-    onNavigateRemoveFlashcard: () -> Unit,
+    onNavigateHome: () -> Unit,
 ) {
+    val flashcardDeck = viewModel.flashcardDeck.observeAsState().value
+
     Scaffold(
         modifier = modifier
             .fillMaxWidth()
@@ -68,6 +77,7 @@ fun DeckSettingsScreen(
             DeckSettingCard(
                 modifier = modifier,
                 onClickSettingCard = { onNavigateAddFlashcard() },
+                dialog = {},
                 icon = {
                     Icon(
                         Icons.Rounded.Add,
@@ -79,7 +89,54 @@ fun DeckSettingsScreen(
             )
             DeckSettingCard(
                 modifier = modifier,
-                onClickSettingCard = { /* TODO */ },
+                onClickSettingCard = {
+                    viewModel.onOpenDialogClicked()
+                },
+                dialog = {
+                    if (viewModel.showDialog) {
+                        AlertDialog(
+                            onDismissRequest = {
+                                // Dismiss the dialog when the user clicks outside the dialog or on the back
+                                // button. If you want to disable that functionality, simply use an empty
+                                // onDismissRequest.
+                                viewModel.onDialogDismiss()
+                            },
+                            icon = { Icon(Icons.Filled.Delete, contentDescription = null) },
+                            title = {
+                                Text(text = "Remove deck: ${flashcardDeck?.deck?.name}")
+                            },
+                            text = {
+                                Text(
+                                    stringResource(R.string.deck_settings_remove_deck_dialog)
+                                )
+                            },
+                            confirmButton = {
+                                TextButton(
+                                    onClick = {
+                                        if (flashcardDeck != null) {
+                                            viewModel.deleteDeck(flashcardDeck)
+                                        } else {
+                                            // TODO handle
+                                        }
+                                        viewModel.onDialogConfirm()
+                                        onNavigateHome()
+                                    }
+                                ) {
+                                    Text("Confirm")
+                                }
+                            },
+                            dismissButton = {
+                                TextButton(
+                                    onClick = {
+                                        viewModel.onDialogDismiss()
+                                    }
+                                ) {
+                                    Text("Cancel")
+                                }
+                            }
+                        )
+                    }
+                },
                 icon = {
                     Icon(
                         Icons.Rounded.Clear,
@@ -87,17 +144,19 @@ fun DeckSettingsScreen(
                         modifier = it
                     )
                 },
-                text = stringResource(R.string.deck_settings_remove_card),
+                text = stringResource(R.string.deck_settings_remove_deck),
             )
         }
     }
 }
+
 
 @Composable
 fun DeckSettingCard(
     modifier: Modifier,
     onClickSettingCard: () -> Unit,
     text: String,
+    dialog: @Composable (modifier: Modifier) -> Unit,
     icon: @Composable (modifier: Modifier) -> Unit,
 ) {
     Row(
@@ -116,14 +175,16 @@ fun DeckSettingCard(
             textAlign = TextAlign.Left,
         )
     }
+    dialog(modifier)
 }
 
 @ThemePreview
 @Composable
 fun DeckSettingsScreen() {
     DeckSettingsScreen(
+        viewModel = hiltViewModel(),
         onNavigateBack = {},
         onNavigateAddFlashcard = {},
-        onNavigateRemoveFlashcard = {},
+        onNavigateHome = {},
     )
 }

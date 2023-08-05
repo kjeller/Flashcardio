@@ -11,6 +11,9 @@ class FlashcardRepository @Inject constructor(private val flashcardDao: Flashcar
 
     fun getFlashcard(flashcardId: Long) = flashcardDao.getFlashcard(flashcardId)
 
+    fun deleteFlashcardsInDeck() {
+
+    }
     companion object {
 
         // For Singleton instantiation

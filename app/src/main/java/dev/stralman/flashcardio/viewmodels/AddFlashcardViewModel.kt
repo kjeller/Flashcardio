@@ -9,7 +9,6 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.stralman.flashcardio.R
-import dev.stralman.flashcardio.data.Deck
 import dev.stralman.flashcardio.data.DeckRepository
 import dev.stralman.flashcardio.data.Flashcard
 import dev.stralman.flashcardio.viewmodels.Constants.Companion.ID_SAVED_STATE_KEY
@@ -57,12 +56,6 @@ class AddFlashcardViewModel @Inject internal constructor(
                 deckId = deckId,
             )
             deckRepository.addCardToDeck(card)
-        }
-    }
-
-    fun deleteDeck() {
-        viewModelScope.launch {
-            flashcardDeck.value?.let { deckRepository.deleteDeck(it.deck) }
         }
     }
 }

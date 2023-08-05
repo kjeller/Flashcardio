@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.stralman.flashcardio.data.Deck
 import dev.stralman.flashcardio.data.DeckRepository
+import dev.stralman.flashcardio.data.FlashcardDeck
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,12 +28,6 @@ class AddDeckViewModel @Inject internal constructor(
         viewModelScope.launch {
             val deck = Deck(deckName)
             deckRepository.addDeck(deck)
-        }
-    }
-
-    fun deleteDeck(deck: Deck) {
-        viewModelScope.launch {
-            deckRepository.deleteDeck(deck)
         }
     }
 }

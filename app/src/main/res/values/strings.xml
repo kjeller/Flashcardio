@@ -15,7 +15,8 @@
 
     <!-- DeckSettingsScreen -->
     <string name="deck_settings_topbar_title">Deck settings</string>
-    <string name="deck_settings_remove_card">Remove card from deck</string>
+    <string name="deck_settings_remove_deck">Remove deck</string>
     <string name="deck_settings_add_card">Add new card to deck</string>
     <string name="flashcard_screen_empty_deck">" Empty deck"</string>
+    <string name="deck_settings_remove_deck_dialog">Are you sure you want to delete this deck? This action is not reversible.</string>
 </resources>
