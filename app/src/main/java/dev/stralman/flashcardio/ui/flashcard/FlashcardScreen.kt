@@ -1,5 +1,6 @@
 package dev.stralman.flashcardio.ui.flashcard
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,11 +26,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -135,9 +138,6 @@ fun FlashCardScreen(
     onNavigateBack: () -> Unit,
     onNavigateToDeckSettings: () -> Unit,
 ) {
-    var cardState by remember {
-        mutableStateOf(CardFace.FRONT)
-    }
     val pageState = rememberPagerState(0)
     Scaffold(
         modifier = modifier
@@ -200,6 +200,15 @@ fun FlashCardScreen(
         floatingActionButtonPosition = FabPosition.End,
 
         ) { contentPadding ->
+        val initialCardstate = CardFace.FRONT
+        var cardState by remember { mutableStateOf(initialCardstate) }
+        LaunchedEffect(pageState) {
+            // Collect from the a snapshotFlow reading the currentPage
+            // reset cardstate to front
+            snapshotFlow { pageState.currentPage }.collect { page ->
+                cardState = initialCardstate
+            }
+        }
         HorizontalPager(
             pageCount = flashcardDeck.cards.size,
             state = pageState,
