@@ -95,6 +95,7 @@ dependencies {
     // TODO move to libs.versions.toml file
     implementation("androidx.compose.material3:material3-window-size-class:1.1.1")
     implementation("androidx.compose.material3:material3")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 
     kapt(libs.androidx.room.compiler)
     kapt(libs.hilt.android.compiler)
