@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -89,6 +90,19 @@ fun DeckSettingsScreen(
             )
             DeckSettingCard(
                 modifier = modifier,
+                onClickSettingCard = { /* TODO add viewmodel functionality*/ },
+                dialog = {},
+                icon = {
+                    Icon(
+                        Icons.Rounded.Edit,
+                        contentDescription = "",
+                        modifier = it
+                    )
+                },
+                text = stringResource(R.string.deck_settings_modify_cards),
+            )
+            DeckSettingCard(
+                modifier = modifier,
                 onClickSettingCard = {
                     viewModel.onOpenDialogClicked()
                 },
@@ -116,13 +130,13 @@ fun DeckSettingsScreen(
                                         if (flashcardDeck != null) {
                                             viewModel.deleteDeck(flashcardDeck)
                                         } else {
-                                            // TODO handle
+                                            // TODO show failure snack message
                                         }
                                         viewModel.onDialogConfirm()
                                         onNavigateHome()
                                     }
                                 ) {
-                                    Text("Confirm")
+                                    Text(stringResource(R.string.dialog_confirm))
                                 }
                             },
                             dismissButton = {
@@ -131,7 +145,7 @@ fun DeckSettingsScreen(
                                         viewModel.onDialogDismiss()
                                     }
                                 ) {
-                                    Text("Cancel")
+                                    Text(stringResource(R.string.dialog_cancel))
                                 }
                             }
                         )
