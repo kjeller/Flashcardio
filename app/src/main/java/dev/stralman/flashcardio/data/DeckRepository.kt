@@ -13,7 +13,8 @@ class DeckRepository @Inject constructor(private val deckDao: DeckDao) {
 
     suspend fun addDeck(deck: Deck) = deckDao.insert(deck)
 
-    suspend fun deleteAllCardsInDeck(flashcardDeck: FlashcardDeck) = deckDao.deleteAllCardsInDeck(flashcardDeck.deck, flashcardDeck.cards)
+    suspend fun deleteAllCardsInDeck(flashcardDeck: FlashcardDeck) =
+        deckDao.deleteAllCardsInDeck(flashcardDeck.deck, flashcardDeck.cards)
 
     suspend fun addCardToDeck(card: Flashcard) = deckDao.insert(card)
 

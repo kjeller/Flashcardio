@@ -1,6 +1,5 @@
 package dev.stralman.flashcardio.ui.flashcard
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

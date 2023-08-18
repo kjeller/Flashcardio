@@ -15,6 +15,7 @@ class Converters {
         val type = object : TypeToken<FlashcardDeck>() {}.type
         return Gson().fromJson(jsonString, type)
     }
+
     @TypeConverter
     fun flashcardFromJson(jsonString: String): Flashcard {
         val type = object : TypeToken<Flashcard>() {}.type

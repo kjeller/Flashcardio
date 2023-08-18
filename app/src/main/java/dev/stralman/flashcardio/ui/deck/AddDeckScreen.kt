@@ -9,10 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -31,11 +29,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.stralman.flashcardio.R
+import dev.stralman.flashcardio.ui.button.AddFloatingActionButton
+import dev.stralman.flashcardio.ui.theme.AppTheme
 import dev.stralman.flashcardio.ui.util.ThemePreview
 import dev.stralman.flashcardio.viewmodels.AddDeckViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddDeckScreen(
     modifier: Modifier = Modifier,
@@ -43,8 +43,35 @@ fun AddDeckScreen(
     onNavigateHome: () -> Unit,
     viewModel: AddDeckViewModel = hiltViewModel(),
 ) {
+    AddDeckScreen(
+        modifier = modifier,
+        onNavigateBack = onNavigateBack,
+        onNavigateHome = onNavigateHome,
+        onAddCard = { scope, snackbarHostState ->
+            scope.launch {
+                viewModel.addDeck()
+                snackbarHostState.showSnackbar("Successfully added deck to database")
+                onNavigateHome()
+            }
+        },
+        onUpdateDeckName = { deckName -> viewModel.updateDeckName(deckName) },
+        deckName = viewModel.deckName,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AddDeckScreen(
+    modifier: Modifier = Modifier,
+    onNavigateBack: () -> Unit,
+    onNavigateHome: () -> Unit,
+    onAddCard: (CoroutineScope, SnackbarHostState) -> Unit,
+    onUpdateDeckName: (String) -> Unit,
+    deckName: String,
+) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
@@ -76,20 +103,11 @@ fun AddDeckScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    scope.launch {
-                        viewModel.addDeck()
-                        snackbarHostState.showSnackbar("Successfully added deck to database")
-                        onNavigateHome()
-                    }
-                }
-            ) {
-                Icon(
-                    Icons.Rounded.Check,
-                    contentDescription = stringResource(id = R.string.deck_add_desc)
-                )
-            }
+            AddFloatingActionButton(
+                modifier = modifier,
+                onClick = { onAddCard(scope, snackbarHostState) },
+                iconContentDescription = stringResource(id = R.string.deck_add_desc)
+            )
         },
         floatingActionButtonPosition = FabPosition.End,
 
@@ -105,8 +123,8 @@ fun AddDeckScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(20.dp),
-                    value = viewModel.deckName,
-                    onValueChange = { deckName -> viewModel.updateDeckName(deckName) },
+                    value = deckName,
+                    onValueChange = onUpdateDeckName,
                     label = {
                         Text(
                             text = stringResource(R.string.add_deck_name_field),
@@ -123,8 +141,13 @@ fun AddDeckScreen(
 @ThemePreview
 @Composable
 fun AddDeckScreenPreview() {
-    AddDeckScreen(
-        onNavigateBack = {},
-        onNavigateHome = {},
-    )
+    AppTheme {
+        AddDeckScreen(
+            onNavigateBack = {},
+            onNavigateHome = {},
+            onAddCard = { _, _ -> },
+            onUpdateDeckName = {},
+            deckName = "Deck name",
+        )
+    }
 }

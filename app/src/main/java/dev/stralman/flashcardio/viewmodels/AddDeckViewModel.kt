@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.stralman.flashcardio.data.Deck
 import dev.stralman.flashcardio.data.DeckRepository
-import dev.stralman.flashcardio.data.FlashcardDeck
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

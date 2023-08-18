@@ -7,7 +7,6 @@ import androidx.work.WorkerParameters
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
-import dev.stralman.flashcardio.data.Deck
 import dev.stralman.flashcardio.data.FlashcardDeck
 import dev.stralman.flashcardio.data.room.AppDatabase
 import kotlinx.coroutines.Dispatchers
@@ -28,11 +27,11 @@ class SeedDatabaseWorker(
 
                         val database = AppDatabase.getInstance(applicationContext)
                         var id: Long = 1
-                        deckList.forEach {deck->
+                        deckList.forEach { deck ->
                             deck.deck.id = id
                             database.deckDao().insert(deck.deck)
 
-                            deck.cards.forEach {card ->
+                            deck.cards.forEach { card ->
                                 card.deckId = deck.deck.id
                             }
                             database.deckDao().insertAll(deck.cards)

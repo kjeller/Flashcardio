@@ -6,10 +6,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import dev.stralman.flashcardio.ui.deck.AddDeckScreen
-import dev.stralman.flashcardio.ui.deck.DeckScreen
+import dev.stralman.flashcardio.ui.deck.DeckListScreen
 import dev.stralman.flashcardio.ui.deck.DeckSettingsScreen
 import dev.stralman.flashcardio.ui.flashcard.AddFlashCardScreen
 import dev.stralman.flashcardio.ui.flashcard.FlashCardScreen
+import dev.stralman.flashcardio.ui.flashcard.FlashcardListScreen
 
 @Composable
 fun FlashcardioApp(
@@ -20,7 +21,7 @@ fun FlashcardioApp(
         startDestination = Destination.HomeScreen.route
     ) {
         composable(Destination.HomeScreen.route) {
-            DeckScreen(
+            DeckListScreen(
                 onNavigateToDeck = { flashcardDeck -> appState.onNavigateToDeck("${flashcardDeck.deck.id}") },
                 onNavigateToAddDeck = { appState.onNavigateToAddDeckScreen() }
             )
@@ -69,6 +70,19 @@ fun FlashcardioApp(
                     onNavigateBack = { appState.onNavigateBack() },
                     onNavigateAddFlashcard = { appState.onNavigateToAddFlashcardScreen(it) },
                     onNavigateHome = { appState.onNavigateHome() },
+                    onNavigateToModifyFlashcards = { appState.onNavigateToModifyFlashcardsInDeck(it) }
+                )
+            }
+        }
+        composable(
+            Destination.ModifyFlashcardsScreen.route,
+            arguments = listOf(navArgument("deckId") {
+                type = NavType.StringType
+            })
+        ) {
+            it.arguments?.getString("deckId")?.let {
+                FlashcardListScreen(
+                    onNavigateBack = { appState.onNavigateBack() },
                 )
             }
         }

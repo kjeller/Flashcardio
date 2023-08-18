@@ -20,6 +20,10 @@ sealed class Destination(val route: String) {
         fun createRoute(id: String) = "deck/$id/settings"
     }
 
+    object ModifyFlashcardsScreen : Destination("deck/{deckId}/modifyCards") {
+        fun createRoute(id: String) = "deck/$id/modifyCards"
+    }
+
     object AddDeckScreen : Destination("deck/add")
     object AddFlashCardScreen : Destination("deck/{deckId}/add") {
         fun createRoute(id: String) = "deck/$id/add"
@@ -49,6 +53,10 @@ class FlashcardioAppState(
 
     fun onNavigateToDeckSettings(id: String) {
         navController.navigate(Destination.DeckSettingsScreen.createRoute(id))
+    }
+
+    fun onNavigateToModifyFlashcardsInDeck(id: String) {
+        navController.navigate(Destination.ModifyFlashcardsScreen.createRoute(id))
     }
 
     fun onNavigateToAddFlashcardScreen(id: String) {

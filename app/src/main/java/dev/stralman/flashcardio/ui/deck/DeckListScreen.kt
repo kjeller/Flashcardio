@@ -29,14 +29,14 @@ import dev.stralman.flashcardio.ui.util.ThemePreview
 import dev.stralman.flashcardio.viewmodels.DeckListViewModel
 
 @Composable
-fun DeckScreen(
+fun DeckListScreen(
     modifier: Modifier = Modifier,
     viewModel: DeckListViewModel = hiltViewModel(),
     onNavigateToDeck: (FlashcardDeck) -> Unit,
-    onNavigateToAddDeck: (String) -> Unit,
+    onNavigateToAddDeck: () -> Unit,
 ) {
     val flashcardDeckList by viewModel.flashcardDeckList.collectAsState(initial = emptyList())
-    DeckScreen(
+    DeckListScreen(
         flashCardDeckList = flashcardDeckList,
         onNavigateToDeck = onNavigateToDeck,
         onNavigateToAddDeck = onNavigateToAddDeck
@@ -45,11 +45,11 @@ fun DeckScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DeckScreen(
+fun DeckListScreen(
     modifier: Modifier = Modifier,
     flashCardDeckList: List<FlashcardDeck>,
     onNavigateToDeck: (FlashcardDeck) -> Unit,
-    onNavigateToAddDeck: (String) -> Unit,
+    onNavigateToAddDeck: () -> Unit,
 ) {
     Scaffold(
         modifier = modifier
@@ -69,7 +69,7 @@ fun DeckScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    onNavigateToAddDeck("test")
+                    onNavigateToAddDeck()
                 }
             ) {
                 Icon(
@@ -93,10 +93,26 @@ fun DeckScreen(
 
 @ThemePreview
 @Composable
-fun DeckScreenPreview() {
+fun DeckListScreenPreview() {
+    val flashcardDeckList = listOf(
+        FlashcardDeck(
+            deck = Deck(
+                "Deck1"
+            ),
+            cards = emptyList(),
+        ),
+        FlashcardDeck(
+            deck = Deck(
+                "Deck2"
+            ),
+            cards = emptyList(),
+        )
+    )
     AppTheme {
-        DeckScreen(
+        DeckListScreen(
+            flashCardDeckList = flashcardDeckList,
             onNavigateToDeck = {},
-        ) {}
+            onNavigateToAddDeck = {}
+        )
     }
 }

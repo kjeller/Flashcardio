@@ -22,4 +22,5 @@
     <string name="deck_settings_modify_cards">Modify cards in deck</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="modify_flashcards_topbar_title">Modify flashcards</string>
 </resources>

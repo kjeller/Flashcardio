@@ -3,7 +3,6 @@ package dev.stralman.flashcardio.viewmodels
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -18,7 +17,7 @@ import javax.inject.Inject
 class DeckSettingsViewModel @Inject internal constructor(
     savedStateHandle: SavedStateHandle,
     private val deckRepository: DeckRepository,
-    ) : ViewModel() {
+) : ViewModel() {
 
     /**
      *  To cache this correctly this needs to match with [Destination.FlashcardScreen]

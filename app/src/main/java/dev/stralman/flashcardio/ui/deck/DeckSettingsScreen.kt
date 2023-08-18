@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.stralman.flashcardio.R
+import dev.stralman.flashcardio.ui.theme.AppTheme
 import dev.stralman.flashcardio.ui.util.ThemePreview
 import dev.stralman.flashcardio.viewmodels.DeckSettingsViewModel
 
@@ -41,6 +42,7 @@ fun DeckSettingsScreen(
     onNavigateBack: () -> Unit,
     onNavigateAddFlashcard: () -> Unit,
     onNavigateHome: () -> Unit,
+    onNavigateToModifyFlashcards: () -> Unit,
 ) {
     val flashcardDeck = viewModel.flashcardDeck.observeAsState().value
 
@@ -90,7 +92,7 @@ fun DeckSettingsScreen(
             )
             DeckSettingCard(
                 modifier = modifier,
-                onClickSettingCard = { /* TODO add viewmodel functionality*/ },
+                onClickSettingCard = { onNavigateToModifyFlashcards() },
                 dialog = {},
                 icon = {
                     Icon(
@@ -195,10 +197,13 @@ fun DeckSettingCard(
 @ThemePreview
 @Composable
 fun DeckSettingsScreen() {
-    DeckSettingsScreen(
-        viewModel = hiltViewModel(),
-        onNavigateBack = {},
-        onNavigateAddFlashcard = {},
-        onNavigateHome = {},
-    )
+    AppTheme {
+        DeckSettingsScreen(
+            viewModel = hiltViewModel(),
+            onNavigateBack = {},
+            onNavigateAddFlashcard = {},
+            onNavigateHome = {},
+            onNavigateToModifyFlashcards = {},
+        )
+    }
 }
