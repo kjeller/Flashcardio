@@ -16,8 +16,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Flashcardio"
-            android:windowSoftInputMode="adjustResize">
+            android:theme="@style/Theme.Flashcardio">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
