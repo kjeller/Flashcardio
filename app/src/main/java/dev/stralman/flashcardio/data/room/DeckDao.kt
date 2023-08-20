@@ -34,7 +34,7 @@ interface DeckDao {
     suspend fun delete(deck: Deck)
 
     @Delete
-    suspend fun deleteAll(cards: List<Flashcard>)
+    suspend fun deleteCards(cards: List<Flashcard>)
 
     @Delete
     suspend fun deleteAllCardsInDeck(deck: Deck, cards: List<Flashcard>)

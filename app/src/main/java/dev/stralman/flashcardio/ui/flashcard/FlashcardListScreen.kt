@@ -43,6 +43,15 @@ fun FlashcardListScreen(
             onEnterSelectMode = { viewModel.updateSelectMode(true) },
             onExitSelectMode = { viewModel.updateSelectMode(false) },
             onUpdateCardInSelectList = { flashcard -> viewModel.updateList(flashcard) },
+            onDeleteSelectedCards = {
+                // Delete cards
+                viewModel.deleteSelectedFlashcards()
+
+                // .. then exit select mode
+                viewModel.updateSelectMode(false)
+
+                // TODO show snackbar on success/fail
+                                    },
         )
     } else {
         // TODO add handling
@@ -59,6 +68,7 @@ fun FlashcardListScreen(
     onEnterSelectMode: () -> Unit,
     onExitSelectMode: () -> Unit,
     onUpdateCardInSelectList: (Flashcard) -> Unit,
+    onDeleteSelectedCards: () -> Unit,
 ) {
     Scaffold(
         modifier = modifier
@@ -88,9 +98,7 @@ fun FlashcardListScreen(
                 actions = {
                     if (selectMode) {
                         IconButton(
-                            onClick = {
-                                /** TODO delete selected flashcard **/
-                            }
+                            onClick = onDeleteSelectedCards
                         ) {
                             Icon(
                                 Icons.Rounded.Delete,
@@ -125,6 +133,7 @@ fun FlashcardListScreen() {
             onEnterSelectMode = {},
             onExitSelectMode = {},
             onUpdateCardInSelectList = {},
+            onDeleteSelectedCards = {},
             flashcardList = listOf(
                 Flashcard(
                     frontText = "frontText1",
