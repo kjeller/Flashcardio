@@ -137,7 +137,10 @@ fun FlashCardScreen(
     onNavigateBack: () -> Unit,
     onNavigateToDeckSettings: () -> Unit,
 ) {
-    val pageState = rememberPagerState(0)
+    val pagerState = rememberPagerState(pageCount = {
+        flashcardDeck.cards.size
+    })
+
     Scaffold(
         modifier = modifier
             .fillMaxWidth()
@@ -149,7 +152,7 @@ fun FlashCardScreen(
                     var titleText = "${flashcardDeck.deck.name}:"
 
                     titleText += if (flashcardDeck.cards.isNotEmpty()) {
-                        " ${pageState.currentPage + 1}/${flashcardDeck.cards.size}"
+                        " ${pagerState.currentPage + 1}/${flashcardDeck.cards.size}"
                     } else {
                         stringResource(R.string.flashcard_screen_empty_deck)
                     }
@@ -201,16 +204,15 @@ fun FlashCardScreen(
         ) { contentPadding ->
         val initialCardstate = CardFace.FRONT
         var cardState by remember { mutableStateOf(initialCardstate) }
-        LaunchedEffect(pageState) {
+        LaunchedEffect(pagerState) {
             // Collect from the a snapshotFlow reading the currentPage
             // reset cardstate to front
-            snapshotFlow { pageState.currentPage }.collect { page ->
+            snapshotFlow { pagerState.currentPage }.collect { page ->
                 cardState = initialCardstate
             }
         }
         HorizontalPager(
-            pageCount = flashcardDeck.cards.size,
-            state = pageState,
+            state = pagerState,
         ) { page ->
             Box(
                 modifier = Modifier
