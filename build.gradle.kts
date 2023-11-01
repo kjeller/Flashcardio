@@ -2,7 +2,6 @@
 buildscript {
     repositories {
         google()
-        mavenCentral()
     }
 
     dependencies {
@@ -13,12 +12,6 @@ buildscript {
 }
 
 plugins {
-    id("com.diffplug.spotless") version "6.4.1"
-}
-
-spotless {
-    kotlin {
-        target("**/*.kt")
-        ktlint(libs.versions.ktlint.get()).userData(mapOf("max_line_length" to "100"))
-    }
+    id("com.android.library") version "8.0.2" apply false
+    id("org.jetbrains.kotlin.android") version "1.8.20" apply false
 }

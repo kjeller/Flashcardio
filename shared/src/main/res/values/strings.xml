@@ -1,0 +1,25 @@
+<resources>
+    <string name="deck_add_desc">Add new flashcard set</string>
+    <string name="deck_settings">Go to flashcard deck settings</string>
+    <string name="title_add_flashcard_to_deck">Add flashcard to deck</string>
+    <string name="add_flashcard_text_item_front_text">Flashcard front text</string>
+    <string name="add_flashcard_text_item_back_text">Flashcard back text</string>
+    <string name="flashcardtype_simple_text_enum_desc">Simple text flashcard</string>
+    <string name="flashcardtype_rich_text_enum_desc">Rich text flashcard</string>
+    <string name="flashcard_deckscreen_title">Flashcard Decks</string>
+
+    <!-- AddDeckScreen-->
+    <string name="add_card_deck_topbar_title">Add card deck</string>
+    <string name="add_deck_name_field">Deck name</string>
+
+    <!-- DeckSettingsScreen -->
+    <string name="deck_settings_topbar_title">Deck settings</string>
+    <string name="deck_settings_remove_deck">Remove deck</string>
+    <string name="deck_settings_add_card">Add new card to deck</string>
+    <string name="flashcard_screen_empty_deck">" Empty deck"</string>
+    <string name="deck_settings_remove_deck_dialog">Are you sure you want to delete this deck? This action is not reversible.</string>
+    <string name="deck_settings_modify_cards">Modify cards in deck</string>
+    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="modify_flashcards_topbar_title">Modify flashcards</string>
+</resources>
